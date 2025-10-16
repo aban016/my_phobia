@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomBottomNav extends StatelessWidget {
@@ -22,42 +23,78 @@ class CustomBottomNav extends StatelessWidget {
         ),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _bottomNavItem(Icons.bar_chart, "Progress Tracking", Color(0xFF320F7D), 0),
-          _bottomNavItem(Icons.home, "Home", Color(0xFF320F7D), 1, isActive: true),
-          _bottomNavItem(Icons.support_agent, "Holistic Support", Color(0xFF320F7D), 2),
+          _bottomNavItem(CupertinoIcons.chart_bar_square_fill, "Progress Tracking", const Color(0xFF320F7D), 0),
+          _bottomNavItem(CupertinoIcons.house_fill, "Home", const Color(0xFF320F7D), 1),
+          _bottomNavItem(CupertinoIcons.question_circle, "Holistic Support", const Color(0xFF320F7D), 2),
         ],
       ),
     );
   }
 
   // 🔹 Bottom Nav Item
-  Widget _bottomNavItem(IconData icon, String label, Color color, int index,
-      {bool isActive = false}) {
+  Widget _bottomNavItem(IconData icon, String label, Color color, int index) {
     final bool active = currentIndex == index;
+
+    // Calculate border radius depending on position and activity
+    BorderRadius borderRadius;
+    if (active) {
+      if (index == 0) {
+        // Only left top rounded
+        borderRadius = const BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(0),
+        );
+      } else if (index == 1) {
+        // No top rounding for middle
+        borderRadius = const BorderRadius.only(
+          topLeft: Radius.circular(0),
+          topRight: Radius.circular(0),
+        );
+      } else if (index == 2) {
+        // Only right top rounded
+        borderRadius = const BorderRadius.only(
+          topLeft: Radius.circular(0),
+          topRight: Radius.circular(30),
+        );
+      } else {
+        borderRadius = BorderRadius.zero;
+      }
+    } else {
+      borderRadius = const BorderRadius.only(
+        topLeft: Radius.circular(0),
+        topRight: Radius.circular(0),
+      );
+    }
 
     return Expanded(
       child: GestureDetector(
         onTap: () => onTap(index),
-        child: Container(
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          curve: Curves.ease,
+          margin: EdgeInsets.zero,
           decoration: BoxDecoration(
-            color: active ? color : Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft:  const Radius.circular(30),
-              topRight:  const Radius.circular(30),
-            ),
+            color: active ? color : Colors.transparent,
+            borderRadius: borderRadius,
           ),
+          height: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, color: active ? Colors.white : color, size: 24,),
+              Icon(
+                icon,
+                color: active ? Colors.white : color,
+                size: 24,
+              ),
+              const SizedBox(height: 4),
               Text(
                 label,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   color: active ? Colors.white : color,
                   fontSize: 12,
-                  fontWeight: FontWeight.w300
+                  fontWeight: FontWeight.w300,
                 ),
               ),
             ],

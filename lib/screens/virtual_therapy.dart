@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/custom_topbar.dart';
+import 'package:my_phobia/screens/booked_sessions.dart';
 
 class VirtualTherapyScreen extends StatelessWidget {
   const VirtualTherapyScreen({super.key});
@@ -11,7 +12,7 @@ class VirtualTherapyScreen extends StatelessWidget {
         "name": "David Warren",
         "specialization": "Therapeutic Trainings",
         "image":
-            "images/vt-u-bg.png",
+            "assets/images/vt-u-bg.png",
         "rating": "4.9",
       };
     });
@@ -23,7 +24,8 @@ class VirtualTherapyScreen extends StatelessWidget {
           children: [
             CustomTopBar(
               title: "Virtual Therapy",
-              backgroundImage: "images/home.png",
+              backgroundImage: "assets/images/home.png",
+              onBack: () => Navigator.pop(context),
             ),
             const SizedBox(height: 10),
 
@@ -40,8 +42,6 @@ class VirtualTherapyScreen extends StatelessWidget {
                 ),
               ),
             ),
-
-            const SizedBox(height: 20),
 
             // 🔹 Therapist Cards Grid
             Padding(
@@ -64,6 +64,7 @@ class VirtualTherapyScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final therapist = therapists[index];
                       return _therapistCard(
+                        context: context,
                         image: therapist["image"],
                         name: therapist["name"],
                         specialization: therapist["specialization"],
@@ -82,6 +83,7 @@ class VirtualTherapyScreen extends StatelessWidget {
   }
 
  Widget _therapistCard({
+  required BuildContext context,
   required String image,
   required String name,
   required String specialization,
@@ -141,9 +143,9 @@ class VirtualTherapyScreen extends StatelessWidget {
               right: 0,
               child: Center(
                 child: Container(
-                  padding: const EdgeInsets.all(3), // white border thickness
+                  padding: const EdgeInsets.all(3), 
                   decoration: const BoxDecoration(
-                    color: Colors.pink, // border color
+                    color: Colors.pink, 
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
@@ -156,7 +158,7 @@ class VirtualTherapyScreen extends StatelessWidget {
                   ),
                   child: const CircleAvatar(
                     radius: 28,
-                    backgroundImage: AssetImage('images/user-pfp.png'), // 👈 your user image here
+                    backgroundImage: AssetImage('assets/images/user-pfp.png'),
                   ),
                 ),
               ),
@@ -164,9 +166,8 @@ class VirtualTherapyScreen extends StatelessWidget {
           ],
         ),
 
-        const SizedBox(height: 40), // space for avatar
+        const SizedBox(height: 40), 
 
-        // 🔹 Therapist name
         Text(
           name,
           style: const TextStyle(
@@ -251,6 +252,12 @@ class VirtualTherapyScreen extends StatelessWidget {
             height: 36,
             child: ElevatedButton(
               onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const BookedSessionsScreen(),
+                  ),
+                );
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.zero,

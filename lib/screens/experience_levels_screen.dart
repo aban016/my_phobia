@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:hugeicons/hugeicons.dart';
 import 'package:my_phobia/screens/components/background.dart';
 
 class ExperienceLevelsScreen extends StatelessWidget {
@@ -39,27 +38,30 @@ class ExperienceLevelsScreen extends StatelessWidget {
                 children: [
                   // 🔹 Top bar
                   Row(
-                  children: [
-                    _blurCircleIcon(Icons.arrow_back, onTap: () {
-                      Navigator.pop(context);
-                    }),
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          subtitle ?? "Crowded Street",
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                            decoration: TextDecoration.none,
+                    children: [
+                      // Add back arrow behavior with GestureDetector
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: _blurCircleIcon("assets/images/icons/back.png"),
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            subtitle ?? "Crowded Street",
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                              decoration: TextDecoration.none,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 48), 
-                  ],
-                ),
-
+                      const SizedBox(width: 48),
+                    ],
+                  ),
 
                   const SizedBox(height: 30),
 
@@ -94,21 +96,24 @@ class ExperienceLevelsScreen extends StatelessWidget {
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
-                                fontSize: 20
+                                fontSize: 20,
                               ),
                             ),
-                            subtitle: level["locked"]
-                                ? const HugeIcon(
-                                  icon: HugeIcons.strokeRoundedLocked,
-                                  color: Colors.white,
-                                  size: 24,
-                                )
-                                : const Text(
-                                    "Free",
-                                    style: TextStyle(
-                                      color: Colors.white70,
-                                    ),
-                                  ),
+                            // USE: wrap the icon or text in an Align so it's always aligned left, like "Free"
+                            subtitle: Padding(
+                              padding: const EdgeInsets.only(top: 4.0),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: level["locked"]
+                                    ? Image.asset("assets/images/icons/lock.png", color: Colors.white70, width: 24, height: 24)
+                                    : const Text(
+                                        "Free",
+                                        style: TextStyle(
+                                          color: Colors.white70,
+                                        ),
+                                      ),
+                              ),
+                            ),
                             trailing: ElevatedButton(
                               onPressed: () {},
                               style: ElevatedButton.styleFrom(
@@ -144,22 +149,27 @@ class ExperienceLevelsScreen extends StatelessWidget {
     );
   }
 
-  // 🔹 Reuse the blur circle icon from main screen
-  Widget _blurCircleIcon(IconData icon, {VoidCallback? onTap}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(50),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-          child: Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: Colors.grey.withOpacity(0.2),
-              shape: BoxShape.circle,
+  // Fixed: Now supports wrapping for tap functionality externally.
+  Widget _blurCircleIcon(String imagePath) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(50),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+        child: Container(
+          width: 48,
+          height: 48,
+          decoration: BoxDecoration(
+            color: Colors.grey.withOpacity(0.2),
+            shape: BoxShape.circle,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Image.asset(
+              imagePath,
+              color: Colors.white,
+              width: 24,
+              height: 24,
             ),
-            child: Icon(icon, color: Colors.white, size: 24),
           ),
         ),
       ),

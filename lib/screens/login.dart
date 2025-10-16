@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hugeicons/hugeicons.dart';
-import 'package:my_phobia/screens/Home/home.dart';
 import 'package:my_phobia/screens/components/background.dart';
+import 'package:my_phobia/screens/components/gradient_button.dart';
 import 'package:my_phobia/screens/register.dart';
 
 class Login extends StatelessWidget {
@@ -9,6 +8,8 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final bool isSmallDevice = screenWidth < 350;
 
     return Scaffold(
       body: Stack(
@@ -22,9 +23,9 @@ class Login extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  const SizedBox(height: 90),
                   // Logo
                   Container(
-                    margin: EdgeInsets.only(top: 90),
                     width: 200,
                     height: 200,
                     decoration: const BoxDecoration(
@@ -111,53 +112,20 @@ class Login extends StatelessWidget {
                         Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/forgot_password');
+                            },
                             child: const Text("Forgot Password?", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white),),
                           ),
                         ),
                         const SizedBox(height: 10),
 
                         // Login Button
-                        SizedBox(
-                          width: double.infinity,
-                          height: 56,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pushReplacementNamed(context, '/home');
-                            },
-                            style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.zero,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                            ),
-                            child: Ink(
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    Color(0xFFF5A626),
-                                    Color(0xFFEE3A8E),
-                                    Color(0xFF8944CD),
-                                    Color(0xFF5222E8),
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                ),
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                              child: Container(
-                                alignment: Alignment.center,
-                                child: const Text(
-                                  "LOGIN NOW",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white, // white text on gradient
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                        GradientButton(
+                          text: "LOGIN NOW",
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(context, '/home');
+                          },
                         ),
 
                         const SizedBox(height: 15),
@@ -202,14 +170,14 @@ class Login extends StatelessWidget {
                           children: [
                             Container(
                               margin: EdgeInsets.only(right: 10),
-                              width: 100,
+                              width: isSmallDevice ? 50 : 100,
                               height: 1,
                               color: Color(0xFF777777),
                             ),
                             Text("Login with",style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white),),
                             Container(
                               margin: EdgeInsets.only(left: 10),
-                              width: 100,
+                              width: isSmallDevice ? 50 : 100,
                               height: 1,
                               color: Color(0xFF777777),
                             ),
@@ -243,10 +211,7 @@ class Login extends StatelessWidget {
                                 ),
                                 child: IconButton(
                                   onPressed: () {},
-                                  icon: const HugeIcon(
-                                    icon: HugeIcons.strokeRoundedGoogle,
-                                    color: Colors.white,
-                                  )
+                                  icon: const Icon(Icons.g_mobiledata, color: Colors.white),
                                 ),
                               ),
                             ),
@@ -310,6 +275,7 @@ class Login extends StatelessWidget {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 90),
                 ],
               ),
             ),

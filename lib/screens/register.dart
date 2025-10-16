@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hugeicons/hugeicons.dart';
 import 'package:my_phobia/screens/components/background.dart';
 import 'package:my_phobia/screens/login.dart';
 
@@ -189,10 +188,7 @@ class SignUp extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           _buildSocialButton(
-                            icon: const HugeIcon(
-                              icon: HugeIcons.strokeRoundedGoogle,
-                              color: Colors.white,
-                            ),
+                            icon: const Icon(Icons.g_mobiledata, color: Colors.white),
                           ),
                           _buildSocialButton(
                             icon: const Icon(Icons.apple, color: Colors.white),

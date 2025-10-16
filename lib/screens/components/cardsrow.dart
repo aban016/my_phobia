@@ -49,6 +49,8 @@ class CardsRow extends StatelessWidget {
     required double width,
     required double height,
   }) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final double textFontSize = screenWidth <= 350 ? 18 : 26;
     return Card(
       color: color,
       shape: RoundedRectangleBorder(
@@ -64,8 +66,8 @@ class CardsRow extends StatelessWidget {
             Text(
               title,
               textAlign: TextAlign.start,
-              style: const TextStyle(
-                fontSize: 26,
+              style: TextStyle(
+                fontSize: textFontSize,
                 fontWeight: FontWeight.w600,
                 color: Colors.white,
                 decoration: TextDecoration.none,
@@ -103,6 +105,8 @@ class CardsRow extends StatelessWidget {
     required double width,
     // required double height,
   }) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final double textFontSize = screenWidth <= 350 ? 18 : 26;
     return ClipRRect(
       borderRadius: BorderRadius.circular(32),
       child: BackdropFilter(
@@ -121,8 +125,8 @@ class CardsRow extends StatelessWidget {
               Text(
                 title,
                 textAlign: TextAlign.start,
-                style: const TextStyle(
-                  fontSize: 26,
+                style: TextStyle(
+                  fontSize: textFontSize,
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
                   decoration: TextDecoration.none,

@@ -8,6 +8,8 @@ class Immersive extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidthForAspectRatio = MediaQuery.of(context).size.width;
+    final double gridAspectRatio = screenWidthForAspectRatio <= 350 ? 0.9 : 0.8;
     final List<Map<String, String>> _experiences = [
       {
         "title": "Experience 01",
@@ -48,7 +50,7 @@ class Immersive extends StatelessWidget {
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          Background(imagePath: "images/home.png"),
+          Background(imagePath: "assets/images/home.png"),
 
           SafeArea(
             child: SingleChildScrollView(
@@ -67,9 +69,12 @@ class Immersive extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          _blurCircleIcon(Icons.arrow_back, onTap: () {
-                            Navigator.pop(context);
-                          }),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: _blurCircleIcon("assets/images/icons/back.png"),
+                          ),
                           const Text(
                             "Immersive Exposure",
                             style: TextStyle(
@@ -79,7 +84,7 @@ class Immersive extends StatelessWidget {
                               decoration: TextDecoration.none,
                             ),
                           ),
-                          _blurCircleIcon(Icons.notifications),
+                          _blurCircleIcon("assets/images/icons/bell.png"),
                         ],
                       ),
                     ),
@@ -107,11 +112,11 @@ class Immersive extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 6,
                         mainAxisSpacing: 6,
-                        childAspectRatio: 0.8,
+                        childAspectRatio: gridAspectRatio,
                       ),
                       itemCount: _experiences.length,
                       itemBuilder: (context, index) {
@@ -142,6 +147,7 @@ class Immersive extends StatelessWidget {
                         }
 
                         return _experienceCard(
+                          context: context, // Pass context for width check
                           image: exp['image']!,
                           title: exp['title']!,
                           subtitle: exp['subtitle']!,
@@ -160,34 +166,45 @@ class Immersive extends StatelessWidget {
   }
 
   // 🔹 Blur Circle Icon
-  Widget _blurCircleIcon(IconData icon, {VoidCallback? onTap}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(50),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
-          child: Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: Colors.grey.withOpacity(0.2),
-              shape: BoxShape.circle,
+   Widget _blurCircleIcon(String imagePath) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(50),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+        child: Container(
+          width: 48,
+          height: 48,
+          decoration: BoxDecoration(
+            color: Colors.grey.withOpacity(0.2),
+            shape: BoxShape.circle,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Image.asset(
+              imagePath,
+              color: Colors.white,
+              width: 24,
+              height: 24,
             ),
-            child: Icon(icon, color: Colors.white, size: 24),
           ),
         ),
       ),
     );
   }
 
-  // 🔹 Experience Card widget
+  // 🔹 Experience Card widget (add context param for sizing)
   Widget _experienceCard({
+    required BuildContext context,
     required String image,
     required String title,
     required String subtitle,
     required VoidCallback onPressed,
   }) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double buttonFontSize = screenWidth <= 350 ? 12 : 18;
+    final double titleFontSize = screenWidth <= 350 ? 22 : 28;
+    final double subtitleFontSize = screenWidth <= 350 ? 12 : 18;
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(30),
       child: Stack(
@@ -218,9 +235,9 @@ class Immersive extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
-                        fontSize: 14,
+                        fontSize: subtitleFontSize,
                         fontWeight: FontWeight.w600,
                         decoration: TextDecoration.none,
                       ),
@@ -230,9 +247,9 @@ class Immersive extends StatelessWidget {
                       subtitle,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
-                        fontSize: 28,
+                        fontSize: titleFontSize,
                         fontWeight: FontWeight.w700,
                         decoration: TextDecoration.none,
                         height: 1.2,
@@ -256,11 +273,11 @@ class Immersive extends StatelessWidget {
                         vertical: 6,
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       "Start Now",
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: buttonFontSize,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
