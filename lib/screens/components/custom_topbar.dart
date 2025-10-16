@@ -142,7 +142,9 @@ class CustomTopBar extends StatelessWidget {
         Align(
           alignment: Alignment.centerRight,
           child: GestureDetector(
-            onTap: onBellTap,
+            onTap: onBellTap ?? () {
+              Navigator.pushNamed(context, '/notification');
+            },
             child: _blurCircleIcon("assets/images/icons/bell.png"),
           ),
         ),

@@ -80,12 +80,12 @@ class _ChangePasswordState extends State<ChangePassword> {
     if (_isFormValid()) {
       PopupHelper.showSuccess(
         context: context,
-        title: "Success",
-        message: "Your password has been changed successfully!",
-        buttonText: "OK",
+        title: "Congratulations!",
+        message: "Therapy session rescheduled with david warren at 5:30 PM",
+        buttonText: "Okay",
         onButtonPressed: () {
           Navigator.pop(context); // Close popup
-          Navigator.pop(context); // Return to settings
+          Navigator.pushReplacementNamed(context, '/home'); // Redirect to home
         },
       );
     }

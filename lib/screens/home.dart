@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/background.dart';
 import 'package:my_phobia/screens/components/cardsrow.dart';
 import 'package:my_phobia/screens/components/daily_thought_card.dart';
+import 'package:my_phobia/screens/notification.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -58,7 +59,12 @@ class _HomeState extends State<Home> {
                               decoration: TextDecoration.none,
                             ),
                           ),
-                          _blurCircleIcon("assets/images/icons/bell.png"),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/notification');
+                            },
+                            child: _blurCircleIcon("assets/images/icons/bell.png"),
+                          ),
                         ],
                       ),
                     ),
@@ -151,7 +157,7 @@ class _HomeState extends State<Home> {
   }
 
   // 🔹 Blur Circle Icon
-  Widget _blurCircleIcon(String imagePath) {
+  Widget _blurCircleIcon(String imagePath, {VoidCallback? onTap = null}) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(50),
       child: BackdropFilter(

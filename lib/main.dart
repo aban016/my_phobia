@@ -18,6 +18,7 @@ import 'package:my_phobia/screens/otp.dart';
 import 'package:my_phobia/screens/reset_password.dart';
 import 'package:my_phobia/screens/splash.dart';
 import 'package:my_phobia/screens/login.dart';
+import 'package:my_phobia/screens/notification.dart';
 
 void main() {
   runApp(const MyApp());
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
         '/otp': (context) => const OTP(),
         '/reset_password': (context) => const ResetPassword(),
         '/splash': (context) => const Splash(),
+        '/notification': (context) => const NotificationScreen(),
       },
     );
   }
