@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:my_phobia/screens/immersive.dart';
-import 'package:my_phobia/screens/virtual_therapy.dart';
+import 'package:my_phobia/screens/user/immersive.dart';
+import 'package:my_phobia/screens/user/virtual_therapy.dart';
 
 class CardsRow extends StatelessWidget {
   const CardsRow({super.key});

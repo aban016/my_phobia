@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/background.dart';
 import 'package:my_phobia/screens/components/cardsrow.dart';
 import 'package:my_phobia/screens/components/daily_thought_card.dart';
-import 'package:my_phobia/screens/notification.dart';
+import 'package:my_phobia/screens/user/notification.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});

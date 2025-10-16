@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/custom_topbar.dart';
-import 'package:my_phobia/screens/chat.dart';
+import 'package:my_phobia/screens/user/chat.dart';
 
 class Inbox extends StatelessWidget {
   const Inbox({super.key});

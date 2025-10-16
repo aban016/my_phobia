@@ -24,6 +24,7 @@ class TherapistDetails extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
+                  const SizedBox(height: 10),
                   DailyThoughtCard(screenWidth: screenWidth, marginHorizontal: 0),
                   const SizedBox(height: 20),
                   Row(

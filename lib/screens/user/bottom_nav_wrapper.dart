@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/custom_bottom_nav.dart';
-import 'package:my_phobia/screens/home.dart';
-import 'package:my_phobia/screens/progress_tracking.dart';
-import 'package:my_phobia/screens/holistic_support.dart';
+import 'package:my_phobia/screens/user/home.dart';
+import 'package:my_phobia/screens/user/progress_tracking.dart';
+import 'package:my_phobia/screens/user/holistic_support.dart';
 import 'package:my_phobia/screens/components/side_menu.dart';
 
 class BottomNavWrapper extends StatefulWidget {

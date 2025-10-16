@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/custom_topbar.dart';
-import 'package:my_phobia/screens/booked_sessions.dart';
+import 'package:my_phobia/screens/user/booked_sessions.dart';
 
 class VirtualTherapyScreen extends StatelessWidget {
   const VirtualTherapyScreen({super.key});

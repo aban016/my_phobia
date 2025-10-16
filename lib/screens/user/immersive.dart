@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/background.dart';
-import 'package:my_phobia/screens/experience_levels_screen.dart';
+import 'package:my_phobia/screens/user/experience_levels_screen.dart';
 
 class Immersive extends StatelessWidget {
   const Immersive({super.key});

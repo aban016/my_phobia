@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_phobia/screens/login.dart';
+import 'package:my_phobia/screens/user/login.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({super.key});

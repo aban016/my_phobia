@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/custom_popup.dart';
 import 'package:my_phobia/screens/components/custom_topbar.dart';
-import 'package:my_phobia/screens/feedback.dart';
-import 'package:my_phobia/screens/therapist_details.dart';
+import 'package:my_phobia/screens/user/feedback.dart';
+import 'package:my_phobia/screens/user/therapist_details.dart';
 
 class BookedSessionsScreen extends StatefulWidget {
   const BookedSessionsScreen({super.key});
