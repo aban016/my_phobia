@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/background.dart';
 import 'package:my_phobia/screens/components/gradient_button.dart';
-import 'package:my_phobia/screens/user/register.dart';
+import 'package:my_phobia/screens/register.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});

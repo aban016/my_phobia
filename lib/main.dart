@@ -13,11 +13,11 @@ import 'package:my_phobia/screens/user/help_feedback.dart';
 import 'package:my_phobia/screens/user/inbox.dart';
 import 'package:my_phobia/screens/user/chat.dart';
 import 'package:my_phobia/screens/user/customer_support.dart';
-import 'package:my_phobia/screens/user/forgot_password.dart';
-import 'package:my_phobia/screens/user/otp.dart';
-import 'package:my_phobia/screens/user/reset_password.dart';
+import 'package:my_phobia/screens/forgot_password.dart';
+import 'package:my_phobia/screens/otp.dart';
+import 'package:my_phobia/screens/reset_password.dart';
 import 'package:my_phobia/screens/user/splash.dart';
-import 'package:my_phobia/screens/user/login.dart';
+import 'package:my_phobia/screens/login.dart';
 import 'package:my_phobia/screens/user/notification.dart';
 
 void main() {

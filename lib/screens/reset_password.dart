@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/background.dart';
 import 'package:my_phobia/screens/components/gradient_button.dart';
-import 'package:my_phobia/screens/user/login.dart';
+import 'package:my_phobia/screens/login.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({super.key});
