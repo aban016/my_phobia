@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 class Background extends StatelessWidget {
   final String? imagePath; // optional parameter
+  final bool? IsSplash; // optional parameter
 
-  const Background({super.key, this.imagePath});
+  const Background({super.key, this.imagePath, this.IsSplash = false});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class Background extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
               BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 9, sigmaY: 9),
+                filter: ImageFilter.blur(sigmaX: (IsSplash ?? false) ? 0 : 9, sigmaY: (IsSplash ?? false) ? 0 : 9),
                 child: Container(
                   color: Colors.black.withOpacity(0),
                 ),

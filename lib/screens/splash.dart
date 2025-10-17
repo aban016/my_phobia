@@ -25,7 +25,7 @@ class _SplashState extends State<Splash> {
     return Scaffold(
       body: Stack(
         children: [
-          const Background(),
+          const Background(IsSplash: true),
 
           // Logo at bottom
           Positioned(
