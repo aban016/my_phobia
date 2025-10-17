@@ -24,12 +24,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void _initializeVideo() {
     // For demo purposes, we'll use a placeholder video
     // In production, you would use a real video file
-    _videoController = VideoPlayerController.asset('assets/videos/onboarding.mp4');
-    _videoController.initialize().then((_) {
-      setState(() {
-        _isVideoInitialized = true;
+    try {
+      _videoController = VideoPlayerController.asset('assets/videos/onboarding.mp4');
+      _videoController.initialize().then((_) {
+        setState(() {
+          _isVideoInitialized = true;
+        });
+      }).catchError((error) {
+        print('Error initializing video: $error');
+        setState(() {
+          _isVideoInitialized = false;
+        });
       });
-    });
+    } catch (e) {
+      print('Error creating video controller: $e');
+      setState(() {
+        _isVideoInitialized = false;
+      });
+    }
   }
 
   void _playVideo() {

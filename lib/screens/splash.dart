@@ -16,7 +16,9 @@ class _SplashState extends State<Splash> {
     
     // Navigate to login after 3 seconds
     Timer(const Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, '/login');
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, '/login');
+      }
     });
   }
 
