@@ -110,14 +110,6 @@ class CustomTopBar extends StatelessWidget {
                       children: const [
                         Icon(Icons.arrow_back, color: Colors.white),
                         SizedBox(width: 4), 
-                        Text(
-                          "Back",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
                       ],
                     ),
                   )

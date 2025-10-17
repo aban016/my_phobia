@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/custom_topbar.dart';
-import 'package:my_phobia/screens/components/custom_search_bar.dart';
 
 class PatientProgressTracking extends StatefulWidget {
   const PatientProgressTracking({super.key});
@@ -10,7 +9,6 @@ class PatientProgressTracking extends StatefulWidget {
 }
 
 class _PatientProgressTrackingState extends State<PatientProgressTracking> {
-  final TextEditingController _searchController = TextEditingController();
   
   // Dynamic values for pie charts
   List<Map<String, dynamic>> growthData = [
@@ -22,7 +20,6 @@ class _PatientProgressTrackingState extends State<PatientProgressTracking> {
 
   @override
   void dispose() {
-    _searchController.dispose();
     super.dispose();
   }
 
@@ -53,15 +50,6 @@ class _PatientProgressTrackingState extends State<PatientProgressTracking> {
                   _buildPatientsInfoSection(),
                   
                   const SizedBox(height: 20),
-                  
-                  // Search Bar
-                  CustomSearchBar(
-                    controller: _searchController,
-                    hintText: "Search for specific patient...",
-                    icon: Icons.search,
-                  ),
-                  
-                  const SizedBox(height: 30),
                   
                   // About Section
                   _buildAboutSection(),

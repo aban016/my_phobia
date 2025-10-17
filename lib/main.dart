@@ -29,6 +29,8 @@ import 'package:my_phobia/screens/therapist/patient_progress_tracking.dart';
 import 'package:my_phobia/screens/therapist/inbox.dart';
 import 'package:my_phobia/screens/therapist/appointment_management.dart';
 import 'package:my_phobia/screens/therapist/bottom_nav_wrapper.dart';
+import 'package:my_phobia/screens/onboarding.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MyApp());
@@ -53,7 +55,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const Splash(),
+      home: const AppInitializer(),
       routes: {
         '/login': (context) => const Login(),
         '/home': (context) => const BottomNavWrapper(),
@@ -84,7 +86,49 @@ class MyApp extends StatelessWidget {
         '/patient_progress_tracking': (context) => const PatientProgressTracking(),
         '/therapist_inbox': (context) => const TherapistInbox(),
         '/appointment_management': (context) => const AppointmentManagement(),
+        '/onboarding': (context) => const OnboardingScreen(),
       },
     );
+  }
+}
+
+class AppInitializer extends StatefulWidget {
+  const AppInitializer({super.key});
+
+  @override
+  State<AppInitializer> createState() => _AppInitializerState();
+}
+
+class _AppInitializerState extends State<AppInitializer> {
+  bool _isLoading = true;
+  bool _showOnboarding = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkOnboardingStatus();
+  }
+
+  Future<void> _checkOnboardingStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    final onboardingCompleted = prefs.getBool('onboarding_completed') ?? false;
+    
+    setState(() {
+      _showOnboarding = !onboardingCompleted;
+      _isLoading = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const Splash();
+    }
+    
+    if (_showOnboarding) {
+      return const OnboardingScreen();
+    }
+    
+    return const Splash();
   }
 }
