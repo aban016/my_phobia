@@ -1,10 +1,87 @@
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/background.dart';
 import 'package:my_phobia/screens/components/gradient_button.dart';
+import 'package:my_phobia/screens/components/custom_popup.dart';
 import 'package:my_phobia/screens/register.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   const Login({super.key});
+
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  // Dummy users array with roles
+  final List<Map<String, dynamic>> dummyUsers = [
+    {
+      'email': 'user@example.com',
+      'password': 'password123',
+      'role': 'user',
+      'name': 'John Doe',
+    },
+    {
+      'email': 'therapist@example.com',
+      'password': 'password123',
+      'role': 'therapist',
+      'name': 'Dr. Sarah Smith',
+    },
+    {
+      'email': 'admin@example.com',
+      'password': 'password123',
+      'role': 'user',
+      'name': 'Admin User',
+    },
+  ];
+
+  void _handleLogin() {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    // Check if fields are empty
+    if (email.isEmpty || password.isEmpty) {
+      PopupHelper.showError(
+        context: context,
+        title: "Missing Information",
+        message: "Please enter both email and password.",
+        buttonText: "OK",
+      );
+      return;
+    }
+
+    // Find user in dummy array
+    final user = dummyUsers.firstWhere(
+      (u) => u['email'] == email && u['password'] == password,
+      orElse: () => {},
+    );
+
+    if (user.isNotEmpty) {
+      // Navigate based on user role
+      if (user['role'] == 'therapist') {
+        Navigator.pushReplacementNamed(context, '/therapist_home');
+      } else {
+        Navigator.pushReplacementNamed(context, '/home');
+      }
+    } else {
+      // Show error popup for invalid credentials
+      PopupHelper.showError(
+        context: context,
+        title: "Login Failed",
+        message: "Invalid email or password. Please try again.",
+        buttonText: "OK",
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,10 +143,13 @@ class Login extends StatelessWidget {
                               borderRadius: BorderRadius.circular(50),
                             ),
                             child: TextField(
-                              decoration: InputDecoration(
+                              controller: _emailController,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: const InputDecoration(
                                 hintText: "Email",
+                                hintStyle: TextStyle(color: Colors.grey),
                                 border: InputBorder.none,
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                                contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                               ),
                             ),
                           ),
@@ -96,11 +176,14 @@ class Login extends StatelessWidget {
                               borderRadius: BorderRadius.circular(50),
                             ),
                             child: TextField(
+                              controller: _passwordController,
                               obscureText: true,
-                              decoration: InputDecoration(
+                              style: const TextStyle(color: Colors.white),
+                              decoration: const InputDecoration(
                                 hintText: "Password",
+                                hintStyle: TextStyle(color: Colors.grey),
                                 border: InputBorder.none,
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                                contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                               ),
                             ),
                           ),
@@ -123,9 +206,7 @@ class Login extends StatelessWidget {
                         // Login Button
                         GradientButton(
                           text: "LOGIN NOW",
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/home');
-                          },
+                          onPressed: _handleLogin,
                         ),
 
                         const SizedBox(height: 15),

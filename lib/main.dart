@@ -19,6 +19,8 @@ import 'package:my_phobia/screens/reset_password.dart';
 import 'package:my_phobia/screens/user/splash.dart';
 import 'package:my_phobia/screens/login.dart';
 import 'package:my_phobia/screens/user/notification.dart';
+import 'package:my_phobia/screens/therapist/create_profile.dart';
+import 'package:my_phobia/screens/therapist/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -64,6 +66,8 @@ class MyApp extends StatelessWidget {
         '/reset_password': (context) => const ResetPassword(),
         '/splash': (context) => const Splash(),
         '/notification': (context) => const NotificationScreen(),
+        '/create_profile': (context) => const CreateProfile(),
+        '/therapist_home': (context) => const HomeScreen(),
       },
     );
   }

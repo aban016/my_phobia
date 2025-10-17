@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/login.dart';
+import 'package:my_phobia/screens/components/custom_popup.dart';
 
 class SideMenu extends StatelessWidget {
-  const SideMenu({super.key});
+  final bool isTherapist;
+  
+  const SideMenu({super.key, this.isTherapist = false});
 
   @override
   Widget build(BuildContext context) {
@@ -113,36 +116,7 @@ class SideMenu extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
-                children: [
-                  _buildMenuItem("Home", Icons.home_outlined, () {
-                    Navigator.pop(context);
-                    Navigator.pushReplacementNamed(context, '/home');
-                  }),
-                  _buildDivider(),
-                  
-                  _buildMenuItem("Appointment Management", Icons.calendar_today_outlined, () {
-                    Navigator.pop(context);
-                    // Navigate to appointment management
-                  }),
-                  _buildDivider(),
-                  
-                  _buildMenuItem("Chats", Icons.chat_bubble_outline, () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/inbox');
-                  }),
-                  _buildDivider(),
-                  
-                  _buildMenuItem("Settings", Icons.settings_outlined, () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/settings');
-                  }),
-                  _buildDivider(),
-                  
-                  _buildMenuItem("Help & Feedback", Icons.help_outline, () {
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/help_feedback');
-                  }),
-                ],
+                children: _buildMenuItems(context),
               ),
             ),
           ),
@@ -155,9 +129,7 @@ class SideMenu extends StatelessWidget {
               height: 50,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context);
-                  // Handle logout
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Login()));
+                  _showLogoutConfirmation(context);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF320F7D),
@@ -186,6 +158,78 @@ class SideMenu extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  List<Widget> _buildMenuItems(BuildContext context) {
+    List<Widget> menuItems = [];
+    
+    if (isTherapist) {
+      // Therapist menu items
+      menuItems.addAll([
+        _buildMenuItem("Home", Icons.home_outlined, () {
+          Navigator.pop(context);
+          Navigator.pushReplacementNamed(context, '/therapist_home');
+        }),
+        _buildDivider(),
+        
+        _buildMenuItem("Appointment Management", Icons.calendar_today_outlined, () {
+          Navigator.pop(context);
+          // Navigate to appointment management
+        }),
+        _buildDivider(),
+        
+        // _buildMenuItem("Patient Management", Icons.people_outline, () {
+        //   Navigator.pop(context);
+        //   // Navigate to patient management
+        // }),
+        // _buildDivider(),
+        
+        _buildMenuItem("Settings", Icons.settings_outlined, () {
+          Navigator.pop(context);
+          Navigator.pushNamed(context, '/settings');
+        }),
+        _buildDivider(),
+        
+        _buildMenuItem("Help & Feedback", Icons.help_outline, () {
+          Navigator.pop(context);
+          Navigator.pushNamed(context, '/help_feedback');
+        }),
+      ]);
+    } else {
+      // User menu items
+      menuItems.addAll([
+        _buildMenuItem("Home", Icons.home_outlined, () {
+          Navigator.pop(context);
+          Navigator.pushReplacementNamed(context, '/home');
+        }),
+        _buildDivider(),
+        
+        _buildMenuItem("Appointment Management", Icons.calendar_today_outlined, () {
+          Navigator.pop(context);
+          // Navigate to appointment management
+        }),
+        _buildDivider(),
+        
+        _buildMenuItem("Chats", Icons.chat_bubble_outline, () {
+          Navigator.pop(context);
+          Navigator.pushNamed(context, '/inbox');
+        }),
+        _buildDivider(),
+        
+        _buildMenuItem("Settings", Icons.settings_outlined, () {
+          Navigator.pop(context);
+          Navigator.pushNamed(context, '/settings');
+        }),
+        _buildDivider(),
+        
+        _buildMenuItem("Help & Feedback", Icons.help_outline, () {
+          Navigator.pop(context);
+          Navigator.pushNamed(context, '/help_feedback');
+        }),
+      ]);
+    }
+    
+    return menuItems;
   }
 
   Widget _buildMenuItem(String title, IconData icon, VoidCallback onTap) {
@@ -220,7 +264,27 @@ class SideMenu extends StatelessWidget {
     return Container(
       height: 1,
       color: Colors.grey.shade300,
-      margin: const EdgeInsets.symmetric(vertical: 0),
+      margin: const EdgeInsets.symmetric(vertical: 0      ),
+    );
+  }
+
+  // Show logout confirmation popup
+  void _showLogoutConfirmation(BuildContext context) {
+    PopupHelper.showConfirmation(
+      context: context,
+      title: "Logout",
+      message: "Are you sure you want to logout?",
+      confirmText: "Yes, Logout",
+      onConfirm: () {
+        // Close the sidebar first
+        Navigator.pop(context);
+        // Navigate to login screen
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const Login()),
+          (route) => false, // Remove all previous routes
+        );
+      },
     );
   }
 }

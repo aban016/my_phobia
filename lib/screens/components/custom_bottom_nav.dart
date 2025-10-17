@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 class CustomBottomNav extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
+  final bool isTherapist;
 
   const CustomBottomNav({
     super.key,
     required this.currentIndex,
     required this.onTap,
+    this.isTherapist = false,
   });
 
   @override
@@ -26,7 +28,12 @@ class CustomBottomNav extends StatelessWidget {
         children: [
           _bottomNavItem(CupertinoIcons.chart_bar_square_fill, "Progress Tracking", const Color(0xFF320F7D), 0),
           _bottomNavItem(CupertinoIcons.house_fill, "Home", const Color(0xFF320F7D), 1),
-          _bottomNavItem(CupertinoIcons.question_circle, "Holistic Support", const Color(0xFF320F7D), 2),
+          _bottomNavItem(
+            isTherapist ? CupertinoIcons.chat_bubble_2_fill : CupertinoIcons.question_circle,
+            isTherapist ? "Communication" : "Holistic Support",
+            const Color(0xFF320F7D),
+            2
+          ),
         ],
       ),
     );

@@ -244,12 +244,10 @@ class PopupHelper {
                 const SizedBox(height: 30),
                 
                 // Only Confirm Button (Cancel removed)
-                Padding(
-                  padding: const EdgeInsets.only(left: 24, right: 24, bottom: 30),
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: ElevatedButton(
+                Container(
+                  width: double.infinity,
+                  height: 50,
+                  child: ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                         onConfirm?.call();
@@ -259,8 +257,9 @@ class PopupHelper {
                         foregroundColor: Colors.white,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
+                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(14), bottomRight: Radius.circular(14)),
                         ),
+                        padding: EdgeInsets.zero,
                       ),
                       child: Text(
                         confirmText ?? "Confirm",
@@ -271,7 +270,6 @@ class PopupHelper {
                         ),
                       ),
                     ),
-                  ),
                 ),
               ],
             ),
