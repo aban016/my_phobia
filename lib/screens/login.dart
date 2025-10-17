@@ -292,7 +292,11 @@ class _LoginState extends State<Login> {
                                 ),
                                 child: IconButton(
                                   onPressed: () {},
-                                  icon: const Icon(Icons.g_mobiledata, color: Colors.white),
+                                  icon: Image.asset(
+                                    'assets/images/icons/google.png', // path to your google logo image
+                                    width: 24,
+                                    height: 24,
+                                  ),
                                 ),
                               ),
                             ),
@@ -319,7 +323,11 @@ class _LoginState extends State<Login> {
                                 ),
                                 child: IconButton(
                                   onPressed: () {},
-                                  icon: const Icon(Icons.apple, color: Colors.white), 
+                                  icon: Image.asset(
+                                    'assets/images/icons/apple.png', // path to your apple logo image
+                                    width: 24,
+                                    height: 24,
+                                  ),
                                 ),
                               ),
                             ),
@@ -346,7 +354,11 @@ class _LoginState extends State<Login> {
                                 ),
                                 child: IconButton(
                                   onPressed: () {},
-                                  icon: const Icon(Icons.facebook, color: Colors.white), // 👈 Facebook icon
+                                  icon: Image.asset(
+                                    'assets/images/icons/facebook.png', // path to your facebook logo image
+                                    width: 24,
+                                    height: 24,
+                                  ),
                                 ),
                               ),
                             ),

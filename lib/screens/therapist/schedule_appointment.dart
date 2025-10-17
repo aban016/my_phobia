@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/custom_topbar.dart';
 import 'package:my_phobia/screens/components/gradient_button.dart';
 import 'package:my_phobia/screens/components/custom_popup.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 
 class ScheduleAppointment extends StatefulWidget {
   const ScheduleAppointment({super.key});
@@ -317,7 +318,7 @@ class _ScheduleAppointmentState extends State<ScheduleAppointment> {
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(vertical: 16),
                                 suffixIcon: const Icon(
-                                  Icons.calendar_today,
+                                  IconsaxPlusBold.calendar,
                                   color: Color(0xFFD63D9D),
                                   size: 20,
                                 ),
@@ -385,7 +386,7 @@ class _ScheduleAppointmentState extends State<ScheduleAppointment> {
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(vertical: 16),
                                 suffixIcon: const Icon(
-                                  Icons.access_time,
+                                  IconsaxPlusBold.clock,
                                   color: Color(0xFFD63D9D),
                                   size: 20,
                                 ),
@@ -453,7 +454,7 @@ class _ScheduleAppointmentState extends State<ScheduleAppointment> {
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(vertical: 16),
                                 suffixIcon: const Icon(
-                                  Icons.access_time,
+                                  IconsaxPlusBold.clock,
                                   color: Color(0xFFD63D9D),
                                   size: 20,
                                 ),

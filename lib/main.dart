@@ -16,7 +16,7 @@ import 'package:my_phobia/screens/user/customer_support.dart';
 import 'package:my_phobia/screens/forgot_password.dart';
 import 'package:my_phobia/screens/otp.dart';
 import 'package:my_phobia/screens/reset_password.dart';
-import 'package:my_phobia/screens/user/splash.dart';
+import 'package:my_phobia/screens/splash.dart';
 import 'package:my_phobia/screens/login.dart';
 import 'package:my_phobia/screens/user/notification.dart';
 import 'package:my_phobia/screens/therapist/create_profile.dart';

@@ -166,31 +166,31 @@ class SideMenu extends StatelessWidget {
     if (isTherapist) {
       // Therapist menu items
       menuItems.addAll([
-        _buildMenuItem("Home", Icons.home_outlined, () {
+        _buildMenuItem("Home", () {
           Navigator.pop(context);
           Navigator.pushReplacementNamed(context, '/therapist_home');
         }),
         _buildDivider(),
         
-        _buildMenuItem("Appointment Management", Icons.calendar_today_outlined, () {
+        _buildMenuItem("Appointment Management", () {
           Navigator.pop(context);
           Navigator.pushNamed(context, '/appointment_management');
         }),
         _buildDivider(),
         
-        // _buildMenuItem("Patient Management", Icons.people_outline, () {
+        // _buildMenuItem("Patient Management", () {
         //   Navigator.pop(context);
         //   // Navigate to patient management
         // }),
         // _buildDivider(),
         
-        _buildMenuItem("Settings", Icons.settings_outlined, () {
+        _buildMenuItem("Settings", () {
           Navigator.pop(context);
           Navigator.pushNamed(context, '/settings');
         }),
         _buildDivider(),
         
-        _buildMenuItem("Help & Feedback", Icons.help_outline, () {
+        _buildMenuItem("Help & Feedback", () {
           Navigator.pop(context);
           Navigator.pushNamed(context, '/help_feedback');
         }),
@@ -198,31 +198,31 @@ class SideMenu extends StatelessWidget {
     } else {
       // User menu items
       menuItems.addAll([
-        _buildMenuItem("Home", Icons.home_outlined, () {
+        _buildMenuItem("Home", () {
           Navigator.pop(context);
           Navigator.pushReplacementNamed(context, '/home');
         }),
         _buildDivider(),
         
-        _buildMenuItem("Appointment Management", Icons.calendar_today_outlined, () {
+        _buildMenuItem("Appointment Management", () {
           Navigator.pop(context);
           Navigator.pushNamed(context, '/appointment_management');
         }),
         _buildDivider(),
         
-        _buildMenuItem("Chats", Icons.chat_bubble_outline, () {
+        _buildMenuItem("Chats", () {
           Navigator.pop(context);
           Navigator.pushNamed(context, '/inbox');
         }),
         _buildDivider(),
         
-        _buildMenuItem("Settings", Icons.settings_outlined, () {
+        _buildMenuItem("Settings", () {
           Navigator.pop(context);
           Navigator.pushNamed(context, '/settings');
         }),
         _buildDivider(),
         
-        _buildMenuItem("Help & Feedback", Icons.help_outline, () {
+        _buildMenuItem("Help & Feedback", () {
           Navigator.pop(context);
           Navigator.pushNamed(context, '/help_feedback');
         }),
@@ -232,29 +232,19 @@ class SideMenu extends StatelessWidget {
     return menuItems;
   }
 
-  Widget _buildMenuItem(String title, IconData icon, VoidCallback onTap) {
+  Widget _buildMenuItem(String title, VoidCallback onTap) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 16),
-        child: Row(
-          children: [
-            Icon(
-              icon,
-              size: 20,
-              color: Colors.black87,
-            ),
-            const SizedBox(width: 12),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
-                color: Colors.black87,
-              ),
-            ),
-          ],
+        child: Text(
+          title,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            color: Colors.black87,
+          ),
         ),
       ),
     );
