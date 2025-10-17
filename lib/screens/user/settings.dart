@@ -22,7 +22,7 @@ class _SettingsState extends State<Settings> {
             title: "Settings",
             backgroundImage: "assets/images/home.png",
             onBack: () {
-              Navigator.pushReplacementNamed(context, '/home');
+              Navigator.pop(context);
             },
           ),
           

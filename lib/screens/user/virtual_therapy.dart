@@ -31,7 +31,7 @@ class VirtualTherapyScreen extends StatelessWidget {
 
             // 🔹 Description Text
             const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               child: Text(
                 "Book Therapy Sessions, Meet Phobia Therapist, Nearby Professionals",
                 style: TextStyle(
@@ -53,6 +53,7 @@ class VirtualTherapyScreen extends StatelessWidget {
 
                   return GridView.builder(
                     physics: const NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,

@@ -201,7 +201,7 @@ class Immersive extends StatelessWidget {
     required VoidCallback onPressed,
   }) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double buttonFontSize = screenWidth <= 350 ? 12 : 18;
+    final double buttonFontSize = screenWidth <= 350 ? 10 : 16;
     final double titleFontSize = screenWidth <= 350 ? 22 : 28;
     final double subtitleFontSize = screenWidth <= 350 ? 12 : 18;
 

@@ -147,6 +147,7 @@ class _BookedSessionsScreenState extends State<BookedSessionsScreen> {
                 children: [
                   const SizedBox(height: 10),
                   _buildTabBar(),
+                  const SizedBox(height: 10),
                   _buildSessionsList(),
                   const SizedBox(height: 12),
                 ],
@@ -269,6 +270,7 @@ class _BookedSessionsScreenState extends State<BookedSessionsScreen> {
 
     return ListView.builder(
       shrinkWrap: true,
+      padding: EdgeInsets.zero,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: filteredSessions.length,
       itemBuilder: (context, index) {

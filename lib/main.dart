@@ -10,8 +10,8 @@ import 'package:my_phobia/screens/user/policy.dart';
 import 'package:my_phobia/screens/user/about.dart';
 import 'package:my_phobia/screens/user/change_password.dart';
 import 'package:my_phobia/screens/user/help_feedback.dart';
-import 'package:my_phobia/screens/user/inbox.dart';
-import 'package:my_phobia/screens/user/chat.dart';
+import 'package:my_phobia/screens/inbox.dart';
+import 'package:my_phobia/screens/chat.dart';
 import 'package:my_phobia/screens/user/customer_support.dart';
 import 'package:my_phobia/screens/forgot_password.dart';
 import 'package:my_phobia/screens/otp.dart';
@@ -20,7 +20,15 @@ import 'package:my_phobia/screens/user/splash.dart';
 import 'package:my_phobia/screens/login.dart';
 import 'package:my_phobia/screens/user/notification.dart';
 import 'package:my_phobia/screens/therapist/create_profile.dart';
-import 'package:my_phobia/screens/therapist/home.dart';
+import 'package:my_phobia/screens/therapist/schedule_appointment.dart';
+import 'package:my_phobia/screens/therapist/upcoming_appointments.dart';
+import 'package:my_phobia/screens/therapist/appointment_details.dart';
+import 'package:my_phobia/screens/therapist/reason_screen.dart';
+import 'package:my_phobia/screens/therapist/edit_appointment.dart';
+import 'package:my_phobia/screens/therapist/patient_progress_tracking.dart';
+import 'package:my_phobia/screens/therapist/inbox.dart';
+import 'package:my_phobia/screens/therapist/appointment_management.dart';
+import 'package:my_phobia/screens/therapist/bottom_nav_wrapper.dart';
 
 void main() {
   runApp(const MyApp());
@@ -67,7 +75,15 @@ class MyApp extends StatelessWidget {
         '/splash': (context) => const Splash(),
         '/notification': (context) => const NotificationScreen(),
         '/create_profile': (context) => const CreateProfile(),
-        '/therapist_home': (context) => const HomeScreen(),
+        '/therapist_home': (context) => const TherapistBottomNavWrapper(),
+        '/schedule_appointment': (context) => const ScheduleAppointment(),
+        '/upcoming_appointments': (context) => const UpcomingAppointments(),
+        '/appointment_details': (context) => const AppointmentDetails(),
+        '/reason_screen': (context) => const ReasonScreen(),
+        '/edit_appointment': (context) => const EditAppointment(),
+        '/patient_progress_tracking': (context) => const PatientProgressTracking(),
+        '/therapist_inbox': (context) => const TherapistInbox(),
+        '/appointment_management': (context) => const AppointmentManagement(),
       },
     );
   }

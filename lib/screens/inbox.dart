@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/custom_topbar.dart';
-import 'package:my_phobia/screens/user/chat.dart';
+import 'package:my_phobia/screens/chat.dart';
 
 class Inbox extends StatelessWidget {
   const Inbox({super.key});
@@ -53,6 +53,7 @@ class Inbox extends StatelessWidget {
                       height: 100,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
+                        padding: EdgeInsets.zero,
                         itemCount: 5,
                         itemBuilder: (context, index) {
                           final activities = [
@@ -126,10 +127,11 @@ class Inbox extends StatelessWidget {
                       ),
                     ),
                     
-                    
+                    const SizedBox(height: 8),
                     // Messages List
                     ListView.builder(
                       shrinkWrap: true,
+                      padding: EdgeInsets.zero,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: 5,
                       itemBuilder: (context, index) {

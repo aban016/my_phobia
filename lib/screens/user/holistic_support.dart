@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/custom_topbar.dart';
 import 'package:my_phobia/screens/components/custom_popup.dart';
+import 'package:my_phobia/screens/components/custom_search_bar.dart';
 
 class HolisticSupport extends StatefulWidget {
   const HolisticSupport({super.key});
@@ -33,75 +34,14 @@ class _HolisticSupportState extends State<HolisticSupport> {
         // Main Content
         Expanded(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: Column(
               children: [
                 // Search Bar
-                Container(
-                  width: double.infinity,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(25),
-                    border: Border.all(
-                      width: 1,
-                      color: Colors.transparent,
-                    ),
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      gradient: const LinearGradient(
-                        colors: [
-                          Color(0xFFFF6B35), // Orange
-                          Color(0xFFEE3A8D), // Pink
-                          Color(0xFF320F7D), // Purple
-                        ],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                      ),
-                    ),
-                    padding: const EdgeInsets.all(1.5),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(23.5),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: TextField(
-                                controller: _searchController,
-                                decoration: InputDecoration(
-                                  hintText: "Search for specific patient...",
-                                  hintStyle: TextStyle(
-                                    color: const Color(0xFFD63D9D).withOpacity(0.7),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  border: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                ),
-                                style: const TextStyle(
-                                  color: Color(0xFFD63D9D),
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ),
-                            Icon(
-                              Icons.search,
-                              color: const Color(0xFFD63D9D),
-                              size: 20,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                CustomSearchBar(
+                  controller: _searchController,
+                  hintText: "Search for specific patient...",
+                  icon: Icons.search,
                 ),
                 
                 const SizedBox(height: 20),
@@ -109,6 +49,7 @@ class _HolisticSupportState extends State<HolisticSupport> {
                 // News Articles List
                 ListView.builder(
                   shrinkWrap: true,
+                  padding: EdgeInsets.zero,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: 2,
                   itemBuilder: (context, index) {

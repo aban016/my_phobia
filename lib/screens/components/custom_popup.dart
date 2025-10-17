@@ -185,9 +185,9 @@ class PopupHelper {
     required String title,
     required String message,
     String? confirmText,
-    String? cancelText, // will be ignored now
+    String? cancelText,
     VoidCallback? onConfirm,
-    VoidCallback? onCancel, // will be ignored now
+    VoidCallback? onCancel,
   }) {
     showDialog(
       context: context,
@@ -243,33 +243,74 @@ class PopupHelper {
                 
                 const SizedBox(height: 30),
                 
-                // Only Confirm Button (Cancel removed)
-                Container(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        onConfirm?.call();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF5222E8),
-                        foregroundColor: Colors.white,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(14), bottomRight: Radius.circular(14)),
-                        ),
-                        padding: EdgeInsets.zero,
-                      ),
-                      child: Text(
-                        confirmText ?? "Confirm",
-                        style: const TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
+                // Two Buttons: No and Yes
+                Row(
+                  children: [
+                    // No Button (Left)
+                    Expanded(
+                      child: Container(
+                        height: 50,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            onCancel?.call();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF5222E8),
+                            foregroundColor: Colors.white,
+                            elevation: 0,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(14)),
+                            ),
+                            padding: EdgeInsets.zero,
+                          ),
+                          child: Text(
+                            cancelText ?? "No",
+                            style: const TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
                     ),
+                    // Divider
+                    Container(
+                      width: 1,
+                      height: 50,
+                      color: Colors.white.withOpacity(0.3),
+                    ),
+                    // Yes Button (Right)
+                    Expanded(
+                      child: Container(
+                        height: 50,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            onConfirm?.call();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF5222E8),
+                            foregroundColor: Colors.white,
+                            elevation: 0,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(bottomRight: Radius.circular(14)),
+                            ),
+                            padding: EdgeInsets.zero,
+                          ),
+                          child: Text(
+                            confirmText ?? "Yes",
+                            style: const TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

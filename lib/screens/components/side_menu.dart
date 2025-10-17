@@ -174,7 +174,7 @@ class SideMenu extends StatelessWidget {
         
         _buildMenuItem("Appointment Management", Icons.calendar_today_outlined, () {
           Navigator.pop(context);
-          // Navigate to appointment management
+          Navigator.pushNamed(context, '/appointment_management');
         }),
         _buildDivider(),
         
@@ -206,7 +206,7 @@ class SideMenu extends StatelessWidget {
         
         _buildMenuItem("Appointment Management", Icons.calendar_today_outlined, () {
           Navigator.pop(context);
-          // Navigate to appointment management
+          Navigator.pushNamed(context, '/appointment_management');
         }),
         _buildDivider(),
         

@@ -42,10 +42,11 @@ class _ProgressTrackingState extends State<ProgressTracking> {
                       color: Color(0xFF320F7D),
                     ),
                   ),
-                  
+                  SizedBox(height: 10),
                   // Pie Charts Grid
                   GridView.builder(
                     shrinkWrap: true,
+                    padding: EdgeInsets.zero,
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,

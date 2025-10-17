@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/custom_topbar.dart';
-import 'package:my_phobia/screens/components/custom_bottom_nav.dart';
 import 'package:my_phobia/screens/components/gradient_button.dart';
-import 'package:my_phobia/screens/components/side_menu.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final GlobalKey<ScaffoldState>? scaffoldKey;
+  
+  const HomeScreen({super.key, this.scaffoldKey});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int currentIndex = 1; // Home is selected by default
   DateTime selectedDate = DateTime.now();
   DateTime currentMonth = DateTime.now();
 
@@ -20,8 +19,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: const SideMenu(isTherapist: true),
-      drawerScrimColor: Colors.black.withOpacity(0.5),
       body: Column(
         children: [
           // Custom Top Bar
@@ -30,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundImage: "assets/images/home.png",
             showMenuIcon: true,
             showBellIcon: true,
+            scaffoldKey: widget.scaffoldKey,
           ),
           
           // Main Content
@@ -61,38 +59,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   GradientButton(
                     text: "Schedule New Appointment",
                     onPressed: () {
-                      // Handle schedule appointment
+                      Navigator.pushNamed(context, '/schedule_appointment');
                     },
                   ),
                   
                   const SizedBox(height: 100), // Space for bottom nav
                 ],
-              ),
-            ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: CustomBottomNav(
-        currentIndex: currentIndex,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-          // Handle navigation
-          switch (index) {
-            case 0:
-              // Progress Tracking
-              break;
-            case 1:
-              // Home (current screen)
-              break;
-            case 2:
-              // Communication
-              break;
-          }
-        },
-        isTherapist: true,
-      ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
     );
   }
 
@@ -109,29 +86,29 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       child: Container(
-        decoration: BoxDecoration(
+                        decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          gradient: const LinearGradient(
+                          gradient: const LinearGradient(
             colors: [
               Color(0xFFF5A626),
-              Color(0xFFEE3A8E),
+                                  Color(0xFFEE3A8E),
             ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-        padding: const EdgeInsets.all(1.5),
-        child: Container(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                        ),
+                        padding: const EdgeInsets.all(1.5),
+                        child: Container(
           padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: Colors.white,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
             borderRadius: BorderRadius.circular(14.5),
           ),
           child: Column(
             children: [
               // Month and Year
               Text(
-                "June 2023",
+                "${_getMonthName(DateTime.now().month)} ${DateTime.now().year}",
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
@@ -165,82 +142,83 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildCalendarGrid() {
+    final now = DateTime.now();
+    final firstDayOfMonth = DateTime(now.year, now.month, 1);
+    final lastDayOfMonth = DateTime(now.year, now.month + 1, 0);
+    final firstDayWeekday = firstDayOfMonth.weekday % 7; // Convert to 0-6 (Sunday = 0)
+    final daysInMonth = lastDayOfMonth.day;
+    
+    List<List<int>> weeks = [];
+    List<int> currentWeek = [];
+    
+    // Add empty cells for days before the first day of the month
+    for (int i = 0; i < firstDayWeekday; i++) {
+      currentWeek.add(0);
+    }
+    
+    // Add all days of the month
+    for (int day = 1; day <= daysInMonth; day++) {
+      currentWeek.add(day);
+      if (currentWeek.length == 7) {
+        weeks.add(List.from(currentWeek));
+        currentWeek.clear();
+      }
+    }
+    
+    // Add remaining empty cells to complete the last week
+    while (currentWeek.length < 7 && currentWeek.isNotEmpty) {
+      currentWeek.add(0);
+    }
+    if (currentWeek.isNotEmpty) {
+      weeks.add(currentWeek);
+    }
+    
     return Column(
-      children: [
-        // First week
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: weeks.map((week) {
+        return Column(
           children: [
-            _buildDateCell(0), _buildDateCell(0), _buildDateCell(0), _buildDateCell(0), _buildDateCell(0), _buildDateCell(0), _buildDateCell(1),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: week.map((day) => _buildDateCell(day, isToday: day == now.day)).toList(),
+            ),
+            if (weeks.indexOf(week) < weeks.length - 1) const SizedBox(height: 8),
           ],
-        ),
-        const SizedBox(height: 8),
-        // Second week
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildDateCell(2), _buildDateCell(3), _buildDateCell(4), _buildDateCell(5), _buildDateCell(6), _buildDateCell(7), _buildDateCell(8),
-          ],
-        ),
-        const SizedBox(height: 8),
-        // Third week
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildDateCell(9), _buildDateCell(10), _buildDateCell(11), _buildDateCell(12), _buildDateCell(13), _buildDateCell(14), _buildDateCell(15),
-          ],
-        ),
-        const SizedBox(height: 8),
-        // Fourth week
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildDateCell(16), _buildDateCell(17), _buildDateCell(18), _buildDateCell(19), _buildDateCell(20), _buildDateCell(21), _buildDateCell(22),
-          ],
-        ),
-        const SizedBox(height: 8),
-        // Fifth week
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildDateCell(23, isSelected: true), _buildDateCell(24), _buildDateCell(25), _buildDateCell(26), _buildDateCell(27), _buildDateCell(28), _buildDateCell(29),
-          ],
-        ),
-        const SizedBox(height: 8),
-        // Sixth week
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildDateCell(30), _buildDateCell(0), _buildDateCell(0), _buildDateCell(0), _buildDateCell(0), _buildDateCell(0), _buildDateCell(0),
-          ],
-        ),
-      ],
+        );
+      }).toList(),
     );
   }
 
-  Widget _buildDateCell(int day, {bool isSelected = false}) {
+  Widget _buildDateCell(int day, {bool isToday = false}) {
     if (day == 0) {
       return const SizedBox(width: 24, height: 24);
     }
     
     return Container(
-      width: 24,
-      height: 24,
-      decoration: BoxDecoration(
-        color: isSelected ? const Color(0xFFFF6B35) : Colors.transparent,
-        shape: BoxShape.circle,
-      ),
-      child: Center(
-        child: Text(
-          day.toString(),
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: isSelected ? Colors.white : Colors.grey.shade600,
+        width: 24,
+        height: 24,
+        decoration: BoxDecoration(
+          color: isToday ? const Color(0xFFFF6B35) : Colors.transparent,
+          shape: BoxShape.circle,
+        ),
+        child: Center(
+          child: Text(
+            day.toString(),
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: isToday ? Colors.white : Colors.grey.shade600,
+            ),
           ),
         ),
-      ),
     );
+  }
+
+  String _getMonthName(int month) {
+    const months = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    return months[month - 1];
   }
 
   // Today Appointments
@@ -251,12 +229,11 @@ class _HomeScreenState extends State<HomeScreen> {
         const Text(
           "Today Appointments",
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 16,
             fontWeight: FontWeight.w700,
             color: Color(0xFF320F7D),
           ),
         ),
-        const SizedBox(height: 16),
         _buildAppointmentsList([
           {
             'patientName': 'David Warren',
@@ -281,22 +258,26 @@ class _HomeScreenState extends State<HomeScreen> {
             const Text(
               "Upcoming Appointments",
               style: TextStyle(
-                fontSize: 20,
+                fontSize:16,
                 fontWeight: FontWeight.w700,
                 color: Color(0xFF320F7D),
               ),
             ),
-            const Text(
-              "See All",
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey,
-                decoration: TextDecoration.underline,
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, '/upcoming_appointments');
+              },
+              child: const Text(
+                "See All",
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
           ],
         ),
-        const SizedBox(height: 16),
         _buildAppointmentsList([
           {
             'patientName': 'David Warren',
@@ -321,6 +302,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildAppointmentsList(List<Map<String, dynamic>> appointments) {
     return ListView.builder(
       shrinkWrap: true,
+      padding: EdgeInsets.zero,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: appointments.length,
       itemBuilder: (context, index) {
@@ -332,105 +314,139 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // Individual Appointment List Item (matching booked sessions design)
   Widget _buildAppointmentListItem(Map<String, dynamic> appointment) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          bottom: BorderSide(
-            color: Color(0xFFF0F0F0),
-            width: 1,
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, '/appointment_details');
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            bottom: BorderSide(
+              color: Color(0xFFF0F0F0),
+              width: 1,
+            ),
           ),
         ),
-      ),
-      child: Row(
+      child: Column(
         children: [
-          // Patient Image
-          Container(
-            width: 45,
-            height: 45,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: const Color(0xFFEE3A8E), width: 2),
-            ),
-            child: const CircleAvatar(
-              radius: 24,
-              backgroundImage: AssetImage('assets/images/user-pfp.png'),
-            ),
+          Row(
+            children: [
+              // Patient Image
+              Container(
+                width: 45,
+                height: 45,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: const Color(0xFFEE3A8E), width: 2),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0x7DE91E62),
+                      blurRadius: 0,
+                      spreadRadius: 3,
+                      blurStyle: BlurStyle.outer,
+                    ),
+                  ]
+                ),
+                child: const CircleAvatar(
+                  radius: 24,
+                  backgroundImage: AssetImage('assets/images/user-pfp.png'),
+                ),
+              ),
+              const SizedBox(width: 16),
+              // Patient Info
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      appointment['patientName'],
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      appointment['sessionType'],
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey.shade600,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // Start Now button on the right (for today appointments)
+              if (appointment['time'] == 'Now')
+                _buildTimeBadge(appointment['timeLeft']),
+            ],
           ),
-          const SizedBox(width: 16),
-          // Patient Info
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          // Time badges below patient info (for upcoming appointments)
+          if (appointment['time'] != 'Now') ...[
+            const SizedBox(height: 12),
+            Row(
               children: [
-                Text(
-                  appointment['patientName'],
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  appointment['sessionType'],
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey.shade600,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
+                _buildTimeBadge(appointment['timeLeft']),
+                const SizedBox(width: 8),
+                _buildTimeBadge(appointment['time']),
               ],
             ),
-          ),
-          // Status/Time Badge with gradient border (like booked sessions)
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [
-                  Color(0xFFF5A626),
-                  Color(0xFFEE3A8E),
-                  Color(0xFF8944CD),
-                  Color(0xFF5222E8),
-                ],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-              ),
-              borderRadius: BorderRadius.circular(25),
-            ),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(23),
-              ),
-              child: ShaderMask(
-                shaderCallback: (bounds) => const LinearGradient(
-                  colors: [
-                    Color(0xFFF5A626),
-                    Color(0xFFEE3A8E),
-                    Color(0xFF8944CD),
-                    Color(0xFF5222E8),
-                  ],
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                ).createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
-                blendMode: BlendMode.srcIn,
-                child: Text(
-                  appointment['timeLeft'],
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white, // gets overridden by ShaderMask
-                  ),
-                ),
-              ),
-            ),
-          ),
+          ],
         ],
+      ),
+      ),
+    );
+  }
+
+  // Time Badge Helper
+  Widget _buildTimeBadge(String text) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [
+            Color(0xFFF5A626),
+            Color(0xFFEE3A8E),
+            Color(0xFF8944CD),
+            Color(0xFF5222E8),
+          ],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
+        borderRadius: BorderRadius.circular(25),
+      ),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(23),
+        ),
+        child: ShaderMask(
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [
+              Color(0xFFF5A626),
+              Color(0xFFEE3A8E),
+              Color(0xFF8944CD),
+              Color(0xFF5222E8),
+            ],
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+          ).createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
+          blendMode: BlendMode.srcIn,
+          child: Text(
+            text,
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+              color: Colors.white, // gets overridden by ShaderMask
+            ),
+          ),
+        ),
       ),
     );
   }
