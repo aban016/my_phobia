@@ -257,7 +257,7 @@ class _LoginState extends State<Login> {
 
                         // Login Button
                         GradientButton(
-                          text: "LOGIN NOW",
+                          text: "Login Now",
                           onPressed: _handleLogin,
                         ),
 

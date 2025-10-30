@@ -3,7 +3,9 @@ import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:my_phobia/screens/components/custom_topbar.dart';
 
 class Settings extends StatefulWidget {
-  const Settings({super.key});
+  final bool isTherapist;
+  
+  const Settings({super.key, this.isTherapist = false});
 
   @override
   State<Settings> createState() => _SettingsState();
@@ -77,7 +79,11 @@ class _SettingsState extends State<Settings> {
                     title: "Edit Profile",
                     isToggle: false,
                     onTap: () {
-                      Navigator.pushNamed(context, '/edit_profile');
+                      if (widget.isTherapist) {
+                        Navigator.pushNamed(context, '/therapist_edit_profile');
+                      } else {
+                        Navigator.pushNamed(context, '/edit_profile');
+                      }
                     },
                   ),
                   

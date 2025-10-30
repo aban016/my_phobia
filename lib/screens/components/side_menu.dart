@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/login.dart';
+import 'package:my_phobia/screens/user/settings.dart';
 import 'package:my_phobia/screens/components/custom_popup.dart';
 
 class SideMenu extends StatelessWidget {
@@ -186,7 +187,10 @@ class SideMenu extends StatelessWidget {
         
         _buildMenuItem("Settings", () {
           Navigator.pop(context);
-          Navigator.pushNamed(context, '/settings');
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const Settings(isTherapist: true)),
+          );
         }),
         _buildDivider(),
         

@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:my_phobia/screens/components/bordered_button.dart';
 import 'package:my_phobia/screens/components/custom_topbar.dart';
+import 'package:my_phobia/screens/components/gradient_button.dart';
 
 class NotificationScreen extends StatelessWidget {
-  const NotificationScreen({super.key});
+  final bool isTherapist;
+  
+  const NotificationScreen({
+    super.key,
+    this.isTherapist = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5), // Light gray background
+      backgroundColor: Colors.white, // Dark gray background
       body: Column(
         children: [
           // Custom Top Bar with gradient background
@@ -23,7 +30,7 @@ class NotificationScreen extends StatelessWidget {
           Expanded(
             child: Container(
               decoration: const BoxDecoration(
-                color: Color(0xFFF5F5F5),
+                color: Colors.white,
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(25),
                 ),
@@ -39,7 +46,7 @@ class NotificationScreen extends StatelessWidget {
                     const Text(
                       "Today",
                       style: TextStyle(
-                        color: Color(0xFF320F7D),
+                        color: Color(0xFF6A1B9A),
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
                       ),
@@ -48,11 +55,17 @@ class NotificationScreen extends StatelessWidget {
                     const SizedBox(height: 16),
                     
                     // Today's Notifications
-                    ...List.generate(4, (index) => _buildNotificationCard(
+                    _buildNotificationCard(
                       title: "Lorem Ipsum dolor sit amet",
                       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras dui nibh, vestibulum nec eleifend et,",
                       time: "02:50 AM",
-                      profileImage: "assets/images/user-pfp.png",
+                      showButtons: isTherapist,
+                    ),
+                    ...List.generate(3, (index) => _buildNotificationCard(
+                      title: "Lorem Ipsum dolor sit amet",
+                      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras dui nibh, vestibulum nec eleifend et,",
+                      time: "02:50 AM",
+                      showButtons: false,
                     )),
                     
                     const SizedBox(height: 32),
@@ -61,7 +74,7 @@ class NotificationScreen extends StatelessWidget {
                     const Text(
                       "Yesterday",
                       style: TextStyle(
-                        color: Color(0xFF320F7D),
+                        color: Color(0xFF6A1B9A),
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
                       ),
@@ -70,11 +83,11 @@ class NotificationScreen extends StatelessWidget {
                     const SizedBox(height: 16),
                     
                     // Yesterday's Notifications
-                    ...List.generate(3, (index) => _buildNotificationCard(
+                    ...List.generate(2, (index) => _buildNotificationCard(
                       title: "Lorem Ipsum dolor sit amet",
                       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras dui nibh, vestibulum nec eleifend et,",
                       time: "02:50 AM",
-                      profileImage: "assets/images/user-pfp.png",
+                      showButtons: false,
                     )),
                     
                     const SizedBox(height: 20),
@@ -92,109 +105,100 @@ class NotificationScreen extends StatelessWidget {
     required String title,
     required String description,
     required String time,
-    required String profileImage,
+    bool showButtons = false,
   }) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: Colors.grey.shade200,
-          width: 1,
+        gradient: const LinearGradient(
+          colors: [
+            Color(0xFFF5A626),
+            Color(0xFFEE3A8E),
+            Color(0xFF8944CD),
+            Color(0xFF5222E8),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        borderRadius: BorderRadius.circular(15),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Profile Picture
-            Container(
-              width: 54,
-              height: 54,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: const Color(0xFFEE3A8E),
-                  width: 2,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0x7DE91E62),
-                    blurRadius: 0,
-                    spreadRadius: 4,
-                    blurStyle: BlurStyle.outer,
-                  ),
-                ],
-              ),
-              child: CircleAvatar(
-                radius: 28,
-                backgroundImage: AssetImage(profileImage),
-              ),
-            ),
-            
-            const SizedBox(width: 12),
-            
-            // Content
-            Expanded(
-              child: Column(
+      padding: const EdgeInsets.all(2),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(13),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Title and Time Row
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Title and Time Row
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: Colors.black87,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                  Expanded(
+                    child: Text(
+                      title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: Color(0xFF212121),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
                       ),
-                      const SizedBox(width: 8),
-                      Text(
-                        time,
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ],
-                  ),
-                  
-                  const SizedBox(height: 8),
-                  
-                  // Description
-                  Text(
-                    description,
-                    style: TextStyle(
-                      color: Colors.grey[700],
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      height: 1.4,
                     ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    time,
+                    style: const TextStyle(
+                      color: Color(0xFF757575),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
+              
+              const SizedBox(height: 8),
+              
+              // Description
+              Text(
+                description,
+                style: const TextStyle(
+                  color: Color(0xFF212121),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  height: 1.4,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              
+              // Buttons (only for first card)
+              if (showButtons) ...[
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    // Accept Request Button
+                    Expanded(
+                      child: GradientButton(
+                        text: "Accept Request",
+                        onPressed: () {},
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    // Cancel Request Button
+                    Expanded(
+                      child: BorderedButton(text: "Cancel Request", onPressed: () {})
+                    ),
+                  ],
+                ),
+              ],
+            ],
+          ),
         ),
       ),
     );

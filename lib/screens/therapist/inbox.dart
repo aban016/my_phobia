@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/custom_topbar.dart';
 import 'package:my_phobia/screens/chat.dart';
+import 'package:my_phobia/screens/components/profile_picture.dart';
 
 class TherapistInbox extends StatelessWidget {
   final GlobalKey<ScaffoldState>? scaffoldKey;
@@ -15,11 +16,12 @@ class TherapistInbox extends StatelessWidget {
         children: [
           // Custom Top Bar (Therapist Style)
           CustomTopBar(
-            title: "Communication",
+            title: "Hi, Therapist!",
             backgroundImage: "assets/images/home.png",
             showMenuIcon: true,
             showBellIcon: true,
             scaffoldKey: scaffoldKey,
+            isTherapist: true,
           ),
           
           // Main Content
@@ -68,28 +70,10 @@ class TherapistInbox extends StatelessWidget {
                           child: Column(
                             children: [
                               // Profile Picture
-                              Container(
-                                width: 54,
-                                height: 54,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: const Color(0xFFEE3A8E),
-                                    width: 2,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color(0x7DE91E62),
-                                      blurRadius: 0,
-                                      spreadRadius: 4,
-                                      blurStyle: BlurStyle.outer,
-                                    ),
-                                  ],
-                                ),
-                                child: CircleAvatar(
-                                  radius: 28,
-                                  backgroundImage: AssetImage(activity['image']!),
-                                ),
+                              ProfilePicture(
+                                imagePath: activity['image']!,
+                                size: 54,
+                                borderWidth: 2,
                               ),
                               
                               const SizedBox(height: 8),
@@ -186,30 +170,11 @@ class TherapistInbox extends StatelessWidget {
                           child: Row(
                           children: [
                             // Profile Picture
-                            Container(
-                              width: 38,
-                              height: 38,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: const Color(0xFFEE3A8E),
-                                  width: 2,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0x7DE91E62),
-                                    blurRadius: 0,
-                                    spreadRadius: 4,
-                                    blurStyle: BlurStyle.outer,
-                                  ),
-                                ],
-                              ),
-                              child: CircleAvatar(
-                                radius: 23,
-                                backgroundImage: AssetImage(message['image']!),
-                              ),
+                            ProfilePicture(
+                              imagePath: message['image']!,
+                              size: 38,
+                              borderWidth: 2,
                             ),
-                            
                             const SizedBox(width: 15),
                             
                             // Message Content
@@ -240,17 +205,17 @@ class TherapistInbox extends StatelessWidget {
                                     ],
                                   ),
                                   
-                                  const SizedBox(height: 4),
+                                  // const SizedBox(height: 4),
                                   
                                   // Subject
-                                  Text(
-                                    message['subject']!,
-                                    style: const TextStyle(
-                                      color: Color(0xFF320F7D),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                                  // Text(
+                                  //   message['subject']!,
+                                  //   style: const TextStyle(
+                                  //     color: Color(0xFF320F7D),
+                                  //     fontSize: 16,
+                                  //     fontWeight: FontWeight.bold,
+                                  //   ),
+                                  // ),
                                   
                                   const SizedBox(height: 2),
                                   

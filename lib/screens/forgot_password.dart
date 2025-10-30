@@ -78,7 +78,7 @@ class ForgotPassword extends StatelessWidget {
 
                         // Next Button
                         GradientButton(
-                          text: "NEXT",
+                          text: "Next",
                           onPressed: () {
                             Navigator.pushNamed(context, '/otp');
                           },

@@ -20,8 +20,10 @@ import 'package:my_phobia/screens/otp.dart';
 import 'package:my_phobia/screens/reset_password.dart';
 import 'package:my_phobia/screens/splash.dart';
 import 'package:my_phobia/screens/login.dart';
+import 'package:my_phobia/screens/role_selection.dart';
 import 'package:my_phobia/screens/user/notification.dart';
 import 'package:my_phobia/screens/therapist/create_profile.dart';
+import 'package:my_phobia/screens/therapist/edit_profile.dart';
 import 'package:my_phobia/screens/therapist/schedule_appointment.dart';
 import 'package:my_phobia/screens/therapist/upcoming_appointments.dart';
 import 'package:my_phobia/screens/therapist/appointment_details.dart';
@@ -60,6 +62,7 @@ class MyApp extends StatelessWidget {
       home: const AppInitializer(),
       routes: {
         '/login': (context) => const Login(),
+        '/role_selection': (context) => const RoleSelectionScreen(),
         '/home': (context) => const BottomNavWrapper(),
         '/booking_details': (context) => const BookingDetails(),
         '/payment_methods': (context) => const PaymentMethods(),
@@ -81,6 +84,7 @@ class MyApp extends StatelessWidget {
         '/splash': (context) => const Splash(),
         '/notification': (context) => const NotificationScreen(),
         '/create_profile': (context) => const CreateProfile(),
+        '/therapist_edit_profile': (context) => const TherapistEditProfile(),
         '/therapist_home': (context) => const TherapistBottomNavWrapper(),
         '/schedule_appointment': (context) => const ScheduleAppointment(),
         '/upcoming_appointments': (context) => const UpcomingAppointments(),

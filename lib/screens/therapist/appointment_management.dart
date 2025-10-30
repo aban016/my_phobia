@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/custom_topbar.dart';
+import 'package:my_phobia/screens/components/profile_picture.dart';
 
 class AppointmentManagement extends StatefulWidget {
   const AppointmentManagement({super.key});
@@ -132,25 +133,10 @@ class _AppointmentManagementState extends State<AppointmentManagement> {
           Row(
             children: [
               // Patient Image
-              Container(
-                width: 45,
-                height: 45,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: const Color(0xFFEE3A8E), width: 2),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0x7DE91E62),
-                      blurRadius: 0,
-                      spreadRadius: 4,
-                      blurStyle: BlurStyle.outer,
-                    ),
-                  ],
-                ),
-                child: const CircleAvatar(
-                  radius: 30,
-                  backgroundImage: AssetImage('assets/images/user-pfp.png'),
-                ),
+              ProfilePicture(
+                imagePath: 'assets/images/user-pfp.png',
+                size: 45,
+                borderWidth: 2,
               ),
               const SizedBox(width: 16),
               // Patient Details
@@ -194,16 +180,19 @@ class _AppointmentManagementState extends State<AppointmentManagement> {
               ),
             ],
           ),
-          const SizedBox(height: 12),
-          // Date and Time Buttons
-          Row(
-            children: [
-              _buildDateTimeBadge("Today, September 2"),
-              const SizedBox(width: 8),
-              _buildDateTimeBadge("10:00 - 11:00 AM"),
-            ],
-          ),
-          const SizedBox(height: 16),
+          if (status != "Cancelled") ...[
+            const SizedBox(height: 12),
+            // Date and Time Buttons
+            Row(
+              children: [
+                _buildDateTimeBadge("Today, September 2"),
+                const SizedBox(width: 8),
+                _buildDateTimeBadge("10:00 - 11:00 AM"),
+              ],
+            ),
+            const SizedBox(height: 16),
+          ] else
+            const SizedBox(height: 16),
           // Divider
           Container(
             height: 1,
@@ -238,25 +227,12 @@ class _AppointmentManagementState extends State<AppointmentManagement> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(23),
         ),
-        child: ShaderMask(
-          shaderCallback: (bounds) => const LinearGradient(
-            colors: [
-              Color(0xFFF5A626),
-              Color(0xFFEE3A8E),
-              Color(0xFF8944CD),
-              Color(0xFF5222E8),
-            ],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-          ).createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
-          blendMode: BlendMode.srcIn,
-          child: Text(
-            text,
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-              color: Colors.white, // gets overridden by ShaderMask
-            ),
+        child: Text(
+          text,
+          style: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
+            color: Color(0xFFEE3A8E), // simple pink color
           ),
         ),
       ),

@@ -63,27 +63,16 @@ class CustomSearchBar extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
-                    color: Color(0xFF8E8E93),
+                    color: Color(0xFFEE3A8E),
                   ),
                 ),
               ),
               if (icon != null) ...[
                 const SizedBox(width: 8),
-                ShaderMask(
-                  shaderCallback: (bounds) => const LinearGradient(
-                    colors: [
-                      Color(0xFFF5A626),
-                      Color(0xFFEE3A8E),
-                      Color(0xFF8944CD),
-                      Color(0xFF5222E8),
-                    ],
-                  ).createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
-                  blendMode: BlendMode.srcIn,
-                  child: Icon(
-                    icon,
-                    color: Colors.white,
-                    size: 20,
-                  ),
+                Icon(
+                  icon,
+                  color: Color(0xFFEE3A8E), 
+                  size: 20,
                 ),
               ],
             ],

@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:my_phobia/screens/user/notification.dart';
 
 class CustomTopBar extends StatelessWidget {
   final String title;
@@ -12,6 +13,7 @@ class CustomTopBar extends StatelessWidget {
   final VoidCallback? onMenuTap;
   final VoidCallback? onBellTap;
   final GlobalKey<ScaffoldState>? scaffoldKey;
+  final bool isTherapist;
 
   const CustomTopBar({
     super.key,
@@ -25,6 +27,7 @@ class CustomTopBar extends StatelessWidget {
     this.onBellTap,
     this.scaffoldKey,
     this.isBottomNav = false,
+    this.isTherapist = false,
   });
 
   @override
@@ -136,7 +139,12 @@ class CustomTopBar extends StatelessWidget {
           alignment: Alignment.centerRight,
           child: GestureDetector(
             onTap: onBellTap ?? () {
-              Navigator.pushNamed(context, '/notification');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NotificationScreen(isTherapist: isTherapist),
+                ),
+              );
             },
             child: _blurCircleIcon("assets/images/icons/bell.png"),
           ),

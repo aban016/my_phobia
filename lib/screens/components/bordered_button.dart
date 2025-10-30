@@ -42,24 +42,14 @@ class BorderedButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(23.5),
             onTap: onPressed,
             child: Center(
-              child: ShaderMask(
-                shaderCallback: (bounds) => const LinearGradient(
-                  colors: [
-                    Color(0xFFF5A626),
-                    Color(0xFFEE3A8E),
-                    Color(0xFF8944CD),
-                    Color(0xFF5222E8),
-                  ],
-                ).createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
-                blendMode: BlendMode.srcIn,
-                child: Text(
-                  text,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white, // gets overridden by ShaderMask
-                  ),
+              child: Text(
+                text,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFFEE3A8E), // simple pink color
                 ),
+                textAlign: TextAlign.center,
               ),
             ),
           ),

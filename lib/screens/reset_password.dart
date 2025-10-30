@@ -155,7 +155,7 @@ class _ResetPasswordState extends State<ResetPassword> {
 
                         // Reset Button
                         GradientButton(
-                          text: "RESET",
+                          text: "Reset",
                           onPressed: () {
                             // Handle password reset
                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Login()));

@@ -153,7 +153,7 @@ class _OTPState extends State<OTP> {
 
                         // Verify Button
                         GradientButton(
-                          text: "VERIFY",
+                          text: "Verify",
                           onPressed: () {
                             Navigator.pushNamed(context, '/reset_password');
                           },

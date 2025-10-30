@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/background.dart';
+import 'package:my_phobia/screens/components/gradient_button.dart';
 import 'package:my_phobia/screens/login.dart';
+import 'package:my_phobia/screens/role_selection.dart';
+import 'package:my_phobia/screens/user/policy.dart';
+import 'package:my_phobia/screens/user/terms.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   const SignUp({super.key});
+
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
+  bool _isAccepted = false;
 
   @override
   Widget build(BuildContext context) {
@@ -72,49 +83,117 @@ class SignUp extends StatelessWidget {
                       // Confirm Password
                       _buildGradientTextField(hint: "Confirm Password", obscure: true),
 
-                      const SizedBox(height: 25),
+                      const SizedBox(height: 15),
+
+                      // Terms and Privacy Policy Checkbox
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _isAccepted = !_isAccepted;
+                              });
+                            },
+                            child: Container(
+                              width: 20,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2,
+                                ),
+                                color: _isAccepted ? Colors.white : Colors.transparent,
+                              ),
+                              child: _isAccepted
+                                  ? const Icon(
+                                      Icons.check,
+                                      size: 14,
+                                      color: Color(0xFF01122F),
+                                    )
+                                  : null,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Wrap(
+                                  children: [
+                                    const Text(
+                                      "By continuing you accept our ",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => const PrivacyPolicy(),
+                                          ),
+                                        );
+                                      },
+                                      child: const Text(
+                                        "Privacy Policy",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          decoration: TextDecoration.underline,
+                                          decorationColor: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                    const Text(
+                                      " and ",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => const TermsOfServices(),
+                                          ),
+                                        );
+                                      },
+                                      child: const Text(
+                                        "Term of Use",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          decoration: TextDecoration.underline,
+                                          decorationColor: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 20),
 
                       // Signup Button
-                      SizedBox(
-                        width: double.infinity,
-                        height: 56,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // TODO: Handle signup
-                          },
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                          ),
-                          child: Ink(
-                            decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                colors: [
-                                  Color(0xFFF5A626),
-                                  Color(0xFFEE3A8E),
-                                  Color(0xFF8944CD),
-                                  Color(0xFF5222E8),
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              ),
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: Container(
-                              alignment: Alignment.center,
-                              child: const Text(
-                                "SIGNUP NOW",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                      GradientButton(
+                        text: "Sign Up",
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const RoleSelectionScreen()));
+                        },
                       ),
 
                       const SizedBox(height: 15),

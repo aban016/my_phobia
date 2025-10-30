@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:my_phobia/screens/components/custom_topbar.dart';
 import 'package:my_phobia/screens/components/bordered_button.dart';
 import 'package:my_phobia/screens/components/custom_search_bar.dart';
-
+import 'package:my_phobia/screens/components/profile_picture.dart';
+  
 class ProgressTracking extends StatefulWidget {
   final GlobalKey<ScaffoldState>? scaffoldKey;
   
@@ -29,11 +31,12 @@ class _ProgressTrackingState extends State<ProgressTracking> {
         children: [
           // Custom Top Bar
           CustomTopBar(
-            title: "Progress Tracking",
+            title: "Hi, Therapist",
             backgroundImage: "assets/images/home.png",
             showMenuIcon: true,
             showBellIcon: true,
             scaffoldKey: widget.scaffoldKey,
+            isTherapist: true,
           ),
           
           // Main Content
@@ -80,7 +83,7 @@ class _ProgressTrackingState extends State<ProgressTracking> {
         CustomSearchBar(
           controller: _searchController,
           hintText: "Search for specific patient...",
-          icon: Icons.search,
+          icon: Iconsax.search_normal_1_copy,
         ),
         
         const SizedBox(height: 20),
@@ -120,26 +123,11 @@ class _ProgressTrackingState extends State<ProgressTracking> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Patient Image
-              Container(
-                width: 45,
-                height: 45,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: const Color(0xFFEE3A8E), width: 2),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0x7DE91E62),
-                      blurRadius: 0,
-                      spreadRadius: 4,
-                      blurStyle: BlurStyle.outer,
-                    ),
-                  ],
-                ),
-                child: const CircleAvatar(
-                  radius: 30,
-                  backgroundImage: AssetImage('assets/images/user-pfp.png'),
-                ),
+              // Patient Image using ProfilePicture component
+              const ProfilePicture(
+                imagePath: 'assets/images/user-pfp.png',
+                size: 45,
+                borderWidth: 2,
               ),
               const SizedBox(width: 16),
               // Patient Details

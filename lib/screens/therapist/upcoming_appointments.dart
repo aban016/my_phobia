@@ -171,25 +171,12 @@ class _UpcomingAppointmentsState extends State<UpcomingAppointments> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(23),
         ),
-        child: ShaderMask(
-          shaderCallback: (bounds) => const LinearGradient(
-            colors: [
-              Color(0xFFF5A626),
-              Color(0xFFEE3A8E),
-              Color(0xFF8944CD),
-              Color(0xFF5222E8),
-            ],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-          ).createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
-          blendMode: BlendMode.srcIn,
-          child: Text(
-            text,
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-              color: Colors.white, // gets overridden by ShaderMask
-            ),
+        child: Text(
+          text,
+          style: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
+            color: Color(0xFFEE3A8E), // simple pink color
           ),
         ),
       ),
