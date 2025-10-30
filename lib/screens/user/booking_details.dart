@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/custom_topbar.dart';
 import 'package:my_phobia/screens/components/gradient_button.dart';
+import 'package:my_phobia/screens/user/appointment_booking_payment.dart';
 
 class BookingDetails extends StatefulWidget {
   const BookingDetails({super.key});
@@ -35,7 +36,7 @@ class _BookingDetailsState extends State<BookingDetails> {
           ),
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 20),
+              padding: const EdgeInsets.only(left: 26, right: 26, bottom: 20, top: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -218,6 +219,7 @@ class _BookingDetailsState extends State<BookingDetails> {
                   // Time Slots Grid
                   GridView.builder(
                     shrinkWrap: true,
+                    padding: EdgeInsets.symmetric(vertical: 16),
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
@@ -227,6 +229,8 @@ class _BookingDetailsState extends State<BookingDetails> {
                     ),
                     itemCount: timeSlots.length,
                     itemBuilder: (context, index) {
+                      final isSelected = selectedTimeIndex == index;
+                      
                       return GestureDetector(
                         onTap: () {
                           setState(() {
@@ -237,13 +241,23 @@ class _BookingDetailsState extends State<BookingDetails> {
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 0),
                           decoration: BoxDecoration(
-                            color: selectedTimeIndex == index 
-                                ? Colors.grey.shade200 
-                                : Colors.grey.shade100,
                             borderRadius: BorderRadius.circular(100),
+                            gradient: isSelected
+                                ? const LinearGradient(
+                                    colors: [
+                                      Color(0xFFF5A626),
+                                      Color(0xFFEE3A8E),
+                                      Color(0xFF8944CD),
+                                      Color(0xFF5222E8),
+                                    ],
+                                    begin: Alignment.centerLeft,
+                                    end: Alignment.centerRight,
+                                  )
+                                : null,
+                            color: isSelected ? null : Colors.grey.shade100,
                             border: Border.all(
-                              color: selectedTimeIndex == index 
-                                  ? const Color(0xFF320F7D).withOpacity(0.3)
+                              color: isSelected 
+                                  ? Colors.transparent
                                   : Colors.grey.shade300,
                               width: 1,
                             ),
@@ -254,8 +268,8 @@ class _BookingDetailsState extends State<BookingDetails> {
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
-                                color: selectedTimeIndex == index 
-                                    ? const Color(0xFF320F7D)
+                                color: isSelected 
+                                    ? Colors.white
                                     : Colors.grey.shade700,
                               ),
                               textAlign: TextAlign.center,
@@ -412,7 +426,14 @@ class _BookingDetailsState extends State<BookingDetails> {
                   GradientButton(
                           text: "Continue For \$35.00",
                           onPressed: () {
-                            Navigator.pushNamed(context, '/payment_methods');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AppointmentBookingPaymentScreen(
+                                  amount: '35.00',
+                                ),
+                              ),
+                            );
                           },
                         ),
                   

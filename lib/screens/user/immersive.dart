@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:my_phobia/screens/components/background.dart';
 import 'package:my_phobia/screens/user/experience_levels_screen.dart';
 
@@ -9,7 +10,7 @@ class Immersive extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double screenWidthForAspectRatio = MediaQuery.of(context).size.width;
-    final double gridAspectRatio = screenWidthForAspectRatio <= 350 ? 0.9 : 0.8;
+    final double gridAspectRatio = screenWidthForAspectRatio <= 350 ? 0.9 : 0.9;
     final List<Map<String, String>> _experiences = [
       {
         "title": "Experience 01",
@@ -64,8 +65,8 @@ class Immersive extends StatelessWidget {
                     Container(
                       width: screenWidth,
                       height: screenHeight * 0.06,
-                      margin: const EdgeInsets.only(
-                          left: 20, right: 20, top: 40, bottom: 20),
+                       margin: const EdgeInsets.only(
+                          left: 16, right: 16, top: 30, bottom: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -73,7 +74,7 @@ class Immersive extends StatelessWidget {
                             onTap: () {
                               Navigator.pop(context);
                             },
-                            child: _blurCircleIcon("assets/images/icons/back.png"),
+                            child: _blurCircleIcon(Iconsax.arrow_left),
                           ),
                           const Text(
                             "Immersive Exposure",
@@ -84,24 +85,8 @@ class Immersive extends StatelessWidget {
                               decoration: TextDecoration.none,
                             ),
                           ),
-                          _blurCircleIcon("assets/images/icons/bell.png"),
+                          const SizedBox(width: 48),
                         ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    // 🔹 Title
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 20),
-                      child: const Text(
-                        "Exposure Experiences",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
-                          decoration: TextDecoration.none,
-                        ),
                       ),
                     ),
 
@@ -122,36 +107,22 @@ class Immersive extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final exp = _experiences[index];
 
-                        // Navigation logic
-                        VoidCallback navigateToScreen;
-                        if (index == 0) {
-                          // Only first one redirects
-                          navigateToScreen = () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const ExperienceLevelsScreen(),
-                              ),
-                            );
-                          };
-                        } else {
-                          // Others show "Coming soon!"
-                          navigateToScreen = () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("This experience is coming soon!"),
-                                duration: Duration(seconds: 2),
-                              ),
-                            );
-                          };
-                        }
+                        // All cards redirect to ExperienceLevelsScreen
+                        final VoidCallback navigateToScreen = () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ExperienceLevelsScreen(),
+                            ),
+                          );
+                        };
 
                         return _experienceCard(
-                          context: context, // Pass context for width check
+                          context: context,
                           image: exp['image']!,
                           title: exp['title']!,
                           subtitle: exp['subtitle']!,
-                          onPressed: navigateToScreen, // ✅ Fixed here
+                          onPressed: navigateToScreen,
                         );
                       },
                     ),
@@ -165,8 +136,8 @@ class Immersive extends StatelessWidget {
     );
   }
 
-  // 🔹 Blur Circle Icon
-   Widget _blurCircleIcon(String imagePath) {
+  // 🔹 Blur Circle Icon (supports Iconsax icon)
+   Widget _blurCircleIcon(IconData icon) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(50),
       child: BackdropFilter(
@@ -178,13 +149,11 @@ class Immersive extends StatelessWidget {
             color: Colors.grey.withOpacity(0.2),
             shape: BoxShape.circle,
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Image.asset(
-              imagePath,
+          child: const Center(
+            child: Icon(
+              Iconsax.arrow_left_copy,
               color: Colors.white,
-              width: 24,
-              height: 24,
+              size: 24,
             ),
           ),
         ),
@@ -201,11 +170,11 @@ class Immersive extends StatelessWidget {
     required VoidCallback onPressed,
   }) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double buttonFontSize = screenWidth <= 350 ? 10 : 16;
     final double titleFontSize = screenWidth <= 350 ? 22 : 28;
-    final double subtitleFontSize = screenWidth <= 350 ? 12 : 18;
 
-    return ClipRRect(
+  return GestureDetector(
+    onTap: onPressed,
+    child: ClipRRect(
       borderRadius: BorderRadius.circular(30),
       child: Stack(
         fit: StackFit.expand,
@@ -223,29 +192,11 @@ class Immersive extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // 🔹 Title Section
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: subtitleFontSize,
-                        fontWeight: FontWeight.w600,
-                        decoration: TextDecoration.none,
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
+          Center(
+                      child: Text(
                       subtitle,
                       maxLines: 2,
+                      textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: Colors.white,
@@ -255,39 +206,10 @@ class Immersive extends StatelessWidget {
                         height: 1.2,
                       ),
                     ),
-                  ],
-                ),
-
-                // 🔹 Button
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: ElevatedButton(
-                    onPressed: onPressed,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white.withOpacity(0.4),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 6,
-                      ),
-                    ),
-                    child: Text(
-                      "Start Now",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: buttonFontSize,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+                    )
         ],
       ),
-    );
+    ),
+  );
   }
 }

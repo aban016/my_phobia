@@ -204,9 +204,9 @@ class SideMenu extends StatelessWidget {
         }),
         _buildDivider(),
         
-        _buildMenuItem("Appointment Management", () {
+        _buildMenuItem("Booked Sessions", () {
           Navigator.pop(context);
-          Navigator.pushNamed(context, '/appointment_management');
+          Navigator.pushNamed(context, '/booked_sessions');
         }),
         _buildDivider(),
         

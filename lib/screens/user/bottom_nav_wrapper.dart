@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/custom_bottom_nav.dart';
 import 'package:my_phobia/screens/user/home.dart';
 import 'package:my_phobia/screens/user/progress_tracking.dart';
-import 'package:my_phobia/screens/user/holistic_support.dart';
+import 'package:my_phobia/screens/user/news.dart';
 import 'package:my_phobia/screens/components/side_menu.dart';
 
 class BottomNavWrapper extends StatefulWidget {
@@ -19,7 +19,7 @@ class _BottomNavWrapperState extends State<BottomNavWrapper> {
   final List<Widget> _pages = [
     const ProgressTracking(),
     const Home(),
-    const HolisticSupport(),
+    const News(),
   ];
 
   void _onItemTapped(int index) {

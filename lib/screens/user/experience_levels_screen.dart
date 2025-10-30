@@ -1,34 +1,39 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:my_phobia/screens/components/background.dart';
+import 'package:my_phobia/screens/components/gradient_button.dart';
+import 'package:my_phobia/screens/user/subscription_purchase.dart';
 
 class ExperienceLevelsScreen extends StatelessWidget {
   final String? title;
   final String? subtitle;
   final String? image;
+  final bool isSubscribedUser;
 
   const ExperienceLevelsScreen({
     super.key,
     this.title,
     this.subtitle,
     this.image,
+    this.isSubscribedUser = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> levels = [
-      {"name": "Level 01", "status": "Free", "locked": false},
-      {"name": "Level 02", "status": "Locked", "locked": true},
-      {"name": "Level 03", "status": "Locked", "locked": true},
-      {"name": "Level 04", "status": "Locked", "locked": true},
-      {"name": "Level 05", "status": "Locked", "locked": true},
+      {"name": "Level 01", "status": isSubscribedUser ? "Completed" : "In-complete"},
+      {"name": "Level 02", "status": "In-complete"},
+      {"name": "Level 03", "status": "In-complete"},
+      {"name": "Level 04", "status": "In-complete"},
+      {"name": "Level 05", "status": "In-complete"},
     ];
 
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          Background(imagePath: "images/home.png"),
+          Background(imagePath: "assets/images/home.png"),
 
           SafeArea(
             child: Padding(
@@ -36,15 +41,15 @@ class ExperienceLevelsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: 14),
                   // 🔹 Top bar
                   Row(
                     children: [
-                      // Add back arrow behavior with GestureDetector
                       GestureDetector(
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child: _blurCircleIcon("assets/images/icons/back.png"),
+                        child: _blurCircleIcon(Iconsax.arrow_left),
                       ),
                       Expanded(
                         child: Center(
@@ -66,7 +71,7 @@ class ExperienceLevelsScreen extends StatelessWidget {
                   const SizedBox(height: 30),
 
                   Text(
-                    title ?? "Experience 01",
+                    "Experiences",
                     style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
@@ -77,69 +82,109 @@ class ExperienceLevelsScreen extends StatelessWidget {
 
                   const SizedBox(height: 20),
 
-                  // 🔹 Level cards
-                  Expanded(
-                    child: ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: levels.length,
-                      itemBuilder: (context, index) {
-                        final level = levels[index];
-                        return Container(
-                          margin: const EdgeInsets.only(bottom: 12),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF5244F3),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: ListTile(
-                            title: Text(
-                              level["name"],
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 20,
-                              ),
+                  // 🔹 Levels + Subscribe placement
+                  if (isSubscribedUser) ...[
+                    Expanded(
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: levels.length,
+                        itemBuilder: (context, index) {
+                          final level = levels[index];
+                          return Container(
+                            margin: const EdgeInsets.only(bottom: 12),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF5244F3),
+                              borderRadius: BorderRadius.circular(20),
                             ),
-                            // USE: wrap the icon or text in an Align so it's always aligned left, like "Free"
-                            subtitle: Padding(
-                              padding: const EdgeInsets.only(top: 4.0),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: level["locked"]
-                                    ? Image.asset("assets/images/icons/lock.png", color: Colors.white70, width: 24, height: 24)
-                                    : const Text(
-                                        "Free",
-                                        style: TextStyle(
-                                          color: Colors.white70,
-                                        ),
-                                      ),
-                              ),
-                            ),
-                            trailing: ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white.withOpacity(0.2),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 20,
-                                  vertical: 6,
-                                ),
-                              ),
-                              child: const Text(
-                                "Start Now",
-                                style: TextStyle(
+                            child: ListTile(
+                              contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                              title: Text(
+                                level["name"],
+                                style: const TextStyle(
                                   color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              trailing: _statusChip(level["status"]),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ] else ...[
+                    Expanded(
+                      child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Only Level 01
+                            Container(
+                              margin: const EdgeInsets.only(bottom: 12),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF5244F3),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: ListTile(
+                                contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                title: const Text(
+                                  "Level 01",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                trailing: _startNowButton(),
+                              ),
+                            ),
+
+                            const SizedBox(height: 55),
+
+                            // Subscribe section directly under Level 01
+                            const Center(
+                              child: Text(
+                                "Subscribe for More",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                  decoration: TextDecoration.none,
                                 ),
                               ),
                             ),
+                            const SizedBox(height: 10),
+                            const Center(
+                              child: Text(
+                                "Subscribe now to unlock the next level of insights\nand exclusive experiences.",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white70,
+                                  height: 1.4,
+                                  decoration: TextDecoration.none,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                    GradientButton(
+                      text: "Subscribe For \$100.00",
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SubscriptionPurchaseScreen(),
                           ),
                         );
                       },
                     ),
-                  ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -149,8 +194,8 @@ class ExperienceLevelsScreen extends StatelessWidget {
     );
   }
 
-  // Fixed: Now supports wrapping for tap functionality externally.
-  Widget _blurCircleIcon(String imagePath) {
+  // 🔹 Blur Circle Icon (supports Iconsax icon)
+   Widget _blurCircleIcon(IconData icon) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(50),
       child: BackdropFilter(
@@ -162,15 +207,51 @@ class ExperienceLevelsScreen extends StatelessWidget {
             color: Colors.grey.withOpacity(0.2),
             shape: BoxShape.circle,
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Image.asset(
-              imagePath,
+          child: const Center(
+            child: Icon(
+              Iconsax.arrow_left_copy,
               color: Colors.white,
-              width: 24,
-              height: 24,
+              size: 24,
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  // 🔹 Status chip for subscribed users
+  Widget _statusChip(String status) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Text(
+        status,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+    );
+  }
+
+  // 🔹 Start Now button for free level when not subscribed
+  Widget _startNowButton() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: const Text(
+        "Start Now",
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/user/immersive.dart';
 import 'package:my_phobia/screens/user/virtual_therapy.dart';
+import 'package:my_phobia/screens/components/gradient_button.dart';
 
 class CardsRow extends StatelessWidget {
   const CardsRow({super.key});
@@ -9,11 +10,11 @@ class CardsRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    double cardWidth = (screenWidth - 60) / 2; // responsive 2 cards layout (20px margin + 20px gap)
+    double cardWidth = (screenWidth - 50) / 2; // responsive 2 cards layout (20px margin + 20px gap)
     double cardHeight = 200;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -21,7 +22,7 @@ class CardsRow extends StatelessWidget {
           _buildCard(
             context,
             title: "Immersive Exposure",
-            color: const Color(0xff5244F3),
+            color: const Color(0xFF5244F3),
             textColor: Colors.deepPurple,
             width: cardWidth,
             height: cardHeight,
@@ -74,22 +75,22 @@ class CardsRow extends StatelessWidget {
               ),
             ),
             SizedBox(height: 18,),
-            ElevatedButton(
-              onPressed: () {
+            SizedBox(
+              height: 36,
+              width: 109,
+              child: GradientButton(
+                text: "See Details",
+                height: 36,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                borderRadius: 32,
+                onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Immersive()), 
+                    MaterialPageRoute(builder: (context) => Immersive()),
                   );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white.withOpacity(0.1),
-                foregroundColor: textColor,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32),
-                ),
+                },
               ),
-              child: Text("See Details", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white),),
             ),
           ],
         ),
@@ -133,22 +134,22 @@ class CardsRow extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 18,),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => VirtualTherapyScreen()), 
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white.withOpacity(0.1),
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-                  foregroundColor: textColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
+              SizedBox(
+                height: 36,
+                width: 109,
+                child: GradientButton(
+                  text: "See Details",
+                  height: 36,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  borderRadius: 30,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => VirtualTherapyScreen()),
+                    );
+                  },
                 ),
-                child: Text("See Details", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white),),
               ),
             ],
           ),

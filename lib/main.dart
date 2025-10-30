@@ -4,6 +4,7 @@ import 'package:my_phobia/screens/user/bottom_nav_wrapper.dart';
 import 'package:my_phobia/screens/user/booking_details.dart';
 import 'package:my_phobia/screens/user/payment_methods.dart';
 import 'package:my_phobia/screens/user/add_new_card.dart';
+import 'package:my_phobia/screens/user/booked_sessions.dart';
 import 'package:my_phobia/screens/user/settings.dart';
 import 'package:my_phobia/screens/user/terms.dart';
 import 'package:my_phobia/screens/user/policy.dart';
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
         '/booking_details': (context) => const BookingDetails(),
         '/payment_methods': (context) => const PaymentMethods(),
         '/add_new_card': (context) => const AddNewCard(),
+        '/booked_sessions': (context) => const BookedSessionsScreen(),
         '/settings': (context) => const Settings(),
         '/terms': (context) => const TermsOfServices(),
         '/policy': (context) => const PrivacyPolicy(),

@@ -8,6 +8,7 @@ class CustomTopBar extends StatelessWidget {
   final String? backgroundImage;
   final bool showMenuIcon;
   final bool showBellIcon;
+  final bool isBottomNav;
   final VoidCallback? onMenuTap;
   final VoidCallback? onBellTap;
   final GlobalKey<ScaffoldState>? scaffoldKey;
@@ -23,6 +24,7 @@ class CustomTopBar extends StatelessWidget {
     this.onMenuTap,
     this.onBellTap,
     this.scaffoldKey,
+    this.isBottomNav = false,
   });
 
   @override
@@ -67,12 +69,17 @@ class CustomTopBar extends StatelessWidget {
         ),
 
         // 🔹 Content (Icons + Center Title)
-        SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, top: 30, bottom: 20),
-            child: Stack(
-              alignment: Alignment.center,
-              children: _buildStackChildren(context),
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16, right: 16, top: 30, bottom: 0),
+              child: Stack(
+                alignment: Alignment.center,
+                children: _buildStackChildren(context),
+              ),
             ),
           ),
         ),
@@ -105,13 +112,7 @@ class CustomTopBar extends StatelessWidget {
             : onBack != null
                 ? GestureDetector(
                     onTap: onBack,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: const [
-                        Icon(Icons.arrow_back, color: Colors.white),
-                        SizedBox(width: 4), 
-                      ],
-                    ),
+                    child: _blurCircleIconFromIcon(Icons.arrow_back),
                   )
                 : const SizedBox.shrink(),
       ),
@@ -119,10 +120,10 @@ class CustomTopBar extends StatelessWidget {
       // Title
       Text(
         title,
-        style: const TextStyle(
+        style: TextStyle(
           color: Colors.white,
-          fontSize: 18,
-          fontWeight: FontWeight.w700,
+          fontSize: isBottomNav ? 32 : 18,
+          fontWeight: isBottomNav ? FontWeight.w400 : FontWeight.w700,
         ),
         textAlign: TextAlign.center,
       ),
@@ -144,6 +145,27 @@ class CustomTopBar extends StatelessWidget {
     }
 
     return children;
+  }
+
+  // 🔹 Blur Circle Icon from IconData (for back button)
+  Widget _blurCircleIconFromIcon(IconData icon) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(50),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+        child: Container(
+          width: 48,
+          height: 48,
+          decoration: BoxDecoration(
+            color: Colors.grey.withOpacity(0.2),
+            shape: BoxShape.circle,
+          ),
+          child: Center(
+            child: Icon(icon, color: Colors.white, size: 24),
+          ),
+        ),
+      ),
+    );
   }
 
   // 🔹 Blur Circle Icon (same design as Home screen)

@@ -14,3 +14,8 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+
+# For xCode Runner Command:  open ios/Runner.xcworkspace
+
+Newsapi.org: API Key: c50cd67a2c34483fb1623ffb410cab17

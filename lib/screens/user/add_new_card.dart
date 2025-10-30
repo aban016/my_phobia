@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_phobia/screens/components/custom_topbar.dart';
 import 'package:my_phobia/screens/components/gradient_button.dart';
-import 'package:my_phobia/screens/components/custom_popup.dart';
 
 class AddNewCard extends StatefulWidget {
   const AddNewCard({super.key});
@@ -158,292 +157,95 @@ class _AddNewCardState extends State<AddNewCard> {
       body: Column(
         children: [
           CustomTopBar(
-            title: "Add New Card",
+            title: "Add Payment Method",
             backgroundImage: "assets/images/home.png",
             onBack: () => Navigator.pop(context),
           ),
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 20),
-                  
+                  const SizedBox(height: 18),
                   // Account Holder Name Input
-                  Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          gradient: const LinearGradient(
-                            colors: [
-                              Color(0xFFF5A626),
-                              Color(0xFFEE3A8E),
-                              Color(0xFF8944CD),
-                              Color(0xFF5222E8),
-                            ],
-                          ),
-                        ),
-                        padding: const EdgeInsets.all(2),
-                        child: Container(
-                          height: 56,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(28),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: TextField(
-                              controller: _accountHolderController,
-                              onChanged: _validateAccountHolder,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
-                                LengthLimitingTextInputFormatter(50),
-                              ],
-                              decoration: InputDecoration(
-                                hintText: "Account Holder Name",
-                                hintStyle: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xFFD63D9D),
-                                ),
-                                border: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                errorText: _accountHolderError,
-                                errorStyle: const TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.red,
-                                ),
-                              ),
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xFFD63D9D),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                  _buildTextField(
+                    controller: _accountHolderController,
+                    label: "Account Holder Name",
+                    hintText: "Enter Account Holder Name",
+                    onChanged: _validateAccountHolder,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
+                      LengthLimitingTextInputFormatter(50),
                     ],
+                    errorText: _accountHolderError,
                   ),
 
                   const SizedBox(height: 20),
 
                   // Card Number Input
-                  Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          gradient: const LinearGradient(
-                            colors: [
-                              Color(0xFFF5A626),
-                              Color(0xFFEE3A8E),
-                              Color(0xFF8944CD),
-                              Color(0xFF5222E8),
-                            ],
-                          ),
-                        ),
-                        padding: const EdgeInsets.all(2),
-                        child: Container(
-                          height: 56,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(28),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: TextField(
-                              controller: _cardNumberController,
-                              keyboardType: TextInputType.number,
-                              onChanged: (value) {
-                                String formatted = _formatCardNumber(value);
-                                if (formatted != value) {
-                                  _cardNumberController.value = TextEditingValue(
-                                    text: formatted,
-                                    selection: TextSelection.collapsed(offset: formatted.length),
-                                  );
-                                }
-                                _validateCardNumber(formatted);
-                              },
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
-                                LengthLimitingTextInputFormatter(23), // 19 digits + 4 spaces
-                              ],
-                              decoration: InputDecoration(
-                                hintText: "Enter Card No",
-                                hintStyle: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xFFD63D9D),
-                                ),
-                                border: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                errorText: _cardNumberError,
-                                errorStyle: const TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.red,
-                                ),
-                              ),
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xFFD63D9D),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                  _buildTextField(
+                    controller: _cardNumberController,
+                    label: "Card Number",
+                    hintText: "Enter Card No",
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {
+                      String formatted = _formatCardNumber(value);
+                      if (formatted != value) {
+                        _cardNumberController.value = TextEditingValue(
+                          text: formatted,
+                          selection: TextSelection.collapsed(offset: formatted.length),
+                        );
+                      }
+                      _validateCardNumber(formatted);
+                    },
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(23), // 19 digits + 4 spaces
                     ],
+                    errorText: _cardNumberError,
                   ),
 
                   const SizedBox(height: 20),
 
                   // Card Expiry Date Input
-                  Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          gradient: const LinearGradient(
-                            colors: [
-                              Color(0xFFF5A626),
-                              Color(0xFFEE3A8E),
-                              Color(0xFF8944CD),
-                              Color(0xFF5222E8),
-                            ],
-                          ),
-                        ),
-                        padding: const EdgeInsets.all(2),
-                        child: Container(
-                          height: 56,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(28),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: TextField(
-                              controller: _expiryDateController,
-                              keyboardType: TextInputType.number,
-                              onChanged: (value) {
-                                String formatted = _formatExpiryDate(value);
-                                if (formatted != value) {
-                                  _expiryDateController.value = TextEditingValue(
-                                    text: formatted,
-                                    selection: TextSelection.collapsed(offset: formatted.length),
-                                  );
-                                }
-                                _validateExpiryDate(formatted);
-                              },
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
-                                LengthLimitingTextInputFormatter(4), // MMYY
-                              ],
-                              decoration: InputDecoration(
-                                hintText: "Card Expiry Date (MM/YY)",
-                                hintStyle: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xFFD63D9D),
-                                ),
-                                border: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                errorText: _expiryDateError,
-                                errorStyle: const TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.red,
-                                ),
-                              ),
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xFFD63D9D),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                  _buildTextField(
+                    controller: _expiryDateController,
+                    label: "Card Expiry Date",
+                    hintText: "MM/YY",
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {
+                      String formatted = _formatExpiryDate(value);
+                      if (formatted != value) {
+                        _expiryDateController.value = TextEditingValue(
+                          text: formatted,
+                          selection: TextSelection.collapsed(offset: formatted.length),
+                        );
+                      }
+                      _validateExpiryDate(formatted);
+                    },
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(4), // MMYY
                     ],
+                    errorText: _expiryDateError,
                   ),
 
                   const SizedBox(height: 20),
 
                   // CVV Input
-                  Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          gradient: const LinearGradient(
-                            colors: [
-                              Color(0xFFF5A626),
-                              Color(0xFFEE3A8E),
-                              Color(0xFF8944CD),
-                              Color(0xFF5222E8),
-                            ],
-                          ),
-                        ),
-                        padding: const EdgeInsets.all(2),
-                        child: Container(
-                          height: 56,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(28),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: TextField(
-                              controller: _cvvController,
-                              keyboardType: TextInputType.number,
-                              obscureText: true,
-                              onChanged: _validateCVV,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
-                                LengthLimitingTextInputFormatter(4),
-                              ],
-                              decoration: InputDecoration(
-                                hintText: "Enter CVV",
-                                hintStyle: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xFFD63D9D),
-                                ),
-                                border: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                errorText: _cvvError,
-                                errorStyle: const TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.red,
-                                ),
-                              ),
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xFFD63D9D),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                  _buildTextField(
+                    controller: _cvvController,
+                    label: "CVV",
+                    hintText: "Enter CVV",
+                    keyboardType: TextInputType.number,
+                    obscureText: true,
+                    onChanged: _validateCVV,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(4),
                     ],
+                    errorText: _cvvError,
                   ),
 
                   const SizedBox(height: 60),
@@ -452,16 +254,17 @@ class _AddNewCardState extends State<AddNewCard> {
                   GradientButton(
                     text: "Save",
                     onPressed: _isFormValid() ? () {
-                      // Show congratulations popup
-                      PopupHelper.showSuccess(
-                        context: context,
-                        title: "Congratulations!",
-                        message: "Your appointment request has been sent successfully with David Warren this week at 04:00 PM To 05:00 PM",
-                        buttonText: "Okay",
-                        onButtonPressed: () {
-                          Navigator.pushReplacementNamed(context, '/home');
-                        },
-                      );
+                      // Format card number for display (last 4 digits)
+                      String cardNumber = _cardNumberController.text.replaceAll(' ', '');
+                      String last4 = cardNumber.length >= 4 ? cardNumber.substring(cardNumber.length - 4) : '4569';
+                      
+                      // Return card data to previous screen
+                      Navigator.pop(context, {
+                        'cardNumber': '**** **** **** $last4',
+                        'accountHolder': _accountHolderController.text,
+                        'expiryDate': _expiryDateController.text,
+                        'cvv': _cvvController.text,
+                      });
                     } : null,
                   ),
 
@@ -472,6 +275,116 @@ class _AddNewCardState extends State<AddNewCard> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    required String hintText,
+    Function(String)? onChanged,
+    String? errorText,
+    List<TextInputFormatter>? inputFormatters,
+    TextInputType? keyboardType,
+    bool obscureText = false,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 10),
+        
+        Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(
+                  width: 1.5,
+                  color: Colors.transparent,
+                ),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color(0xFFF5A626),
+                      Color(0xFFEE3A8E),
+                      Color(0xFF8944CD),
+                      Color(0xFF5222E8),
+                    ],
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                  ),
+                ),
+                padding: const EdgeInsets.all(1.5),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(28.5),
+                  ),
+                  child: TextField(
+                    controller: controller,
+                    keyboardType: keyboardType,
+                    obscureText: obscureText,
+                    onChanged: onChanged,
+                    inputFormatters: inputFormatters,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: hintText,
+                      hintStyle: TextStyle(
+                        color: Colors.grey[400],
+                        fontSize: 16,
+                      ),
+                      border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 20,
+              top: -12,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Text(
+                  label,
+                  style: const TextStyle(
+                    color: Color(0xFF320F7D),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        
+        if (errorText != null) ...[
+          const SizedBox(height: 8),
+          Text(
+            errorText,
+            style: const TextStyle(
+              color: Colors.red,
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ],
     );
   }
 }

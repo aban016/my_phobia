@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/custom_popup.dart';
 import 'package:my_phobia/screens/components/custom_topbar.dart';
+import 'package:my_phobia/screens/components/profile_picture.dart';
 import 'package:my_phobia/screens/user/feedback.dart';
 import 'package:my_phobia/screens/user/therapist_details.dart';
 
@@ -19,7 +20,7 @@ class _BookedSessionsScreenState extends State<BookedSessionsScreen> {
   final List<Map<String, dynamic>> allSessions = [
     {
       'therapistName': 'David Warren',
-      'rating': '4.5',
+      'isVerified': true,
       'sessionType': 'Therapeutic Trainings',
       'timeLeft': '2 Days Left',
       'category': 'upcoming',
@@ -28,7 +29,7 @@ class _BookedSessionsScreenState extends State<BookedSessionsScreen> {
     },
     {
       'therapistName': 'Sarah Johnson',
-      'rating': '4.8',
+      'isVerified': false,
       'sessionType': 'Cognitive Behavioral Therapy',
       'timeLeft': '5 Days Left',
       'category': 'upcoming',
@@ -37,7 +38,7 @@ class _BookedSessionsScreenState extends State<BookedSessionsScreen> {
     },
     {
       'therapistName': 'Michael Chen',
-      'rating': '4.6',
+      'isVerified': true,
       'sessionType': 'Exposure Therapy',
       'timeLeft': '1 Week Left',
       'category': 'upcoming',
@@ -46,7 +47,7 @@ class _BookedSessionsScreenState extends State<BookedSessionsScreen> {
     },
     {
       'therapistName': 'Emily Rodriguez',
-      'rating': '4.9',
+      'isVerified': true,
       'sessionType': 'Mindfulness Training',
       'timeLeft': '3 Days Left',
       'category': 'upcoming',
@@ -55,7 +56,7 @@ class _BookedSessionsScreenState extends State<BookedSessionsScreen> {
     },
     {
       'therapistName': 'Dr. James Wilson',
-      'rating': '4.7',
+      'isVerified': false,
       'sessionType': 'Virtual Therapy Session',
       'timeLeft': '00:59 Mins Left',
       'category': 'current',
@@ -64,7 +65,7 @@ class _BookedSessionsScreenState extends State<BookedSessionsScreen> {
     },
     {
       'therapistName': 'Lisa Thompson',
-      'rating': '4.4',
+      'isVerified': true,
       'sessionType': 'Group Therapy',
       'timeLeft': '00:45 Mins Left',
       'category': 'current',
@@ -73,7 +74,7 @@ class _BookedSessionsScreenState extends State<BookedSessionsScreen> {
     },
     {
       'therapistName': 'Robert Davis',
-      'rating': '4.6',
+      'isVerified': true,
       'sessionType': 'Individual Counseling',
       'timeLeft': 'Completed',
       'category': 'past',
@@ -82,7 +83,7 @@ class _BookedSessionsScreenState extends State<BookedSessionsScreen> {
     },
     {
       'therapistName': 'Jennifer Brown',
-      'rating': '4.8',
+      'isVerified': false,
       'sessionType': 'Anxiety Management',
       'timeLeft': 'Completed',
       'category': 'past',
@@ -91,7 +92,7 @@ class _BookedSessionsScreenState extends State<BookedSessionsScreen> {
     },
     {
       'therapistName': 'David Warren',
-      'rating': '4.5',
+      'isVerified': true,
       'sessionType': 'Therapeutic Trainings',
       'timeLeft': 'Completed',
       'category': 'past',
@@ -100,7 +101,7 @@ class _BookedSessionsScreenState extends State<BookedSessionsScreen> {
     },
     {
       'therapistName': 'Dr. Amanda Foster',
-      'rating': '4.9',
+      'isVerified': false,
       'sessionType': 'Phobia Treatment',
       'timeLeft': 'Completed',
       'category': 'past',
@@ -109,7 +110,7 @@ class _BookedSessionsScreenState extends State<BookedSessionsScreen> {
     },
     {
       'therapistName': 'Mark Taylor',
-      'rating': '4.3',
+      'isVerified': false,
       'sessionType': 'Stress Management',
       'timeLeft': 'Completed',
       'category': 'past',
@@ -118,7 +119,7 @@ class _BookedSessionsScreenState extends State<BookedSessionsScreen> {
     },
     {
       'therapistName': 'Dr. James Wilson',
-      'rating': '4.7',
+      'isVerified': true,
       'sessionType': 'Virtual Therapy Session',
       'timeLeft': 'Completed',
       'category': 'past',
@@ -289,8 +290,6 @@ class _BookedSessionsScreenState extends State<BookedSessionsScreen> {
     final bool isSmallDevice = screenWidth < 350;
 
     double nameFontSize = isSmallDevice ? 12 : 14;
-    double starSize = isSmallDevice ? 11 : 14;
-    double ratingFontSize = isSmallDevice ? 10 : 12;
     double subtitleFontSize = isSmallDevice ? 10 : 12;
 
     // Determine the session status text
@@ -331,17 +330,10 @@ class _BookedSessionsScreenState extends State<BookedSessionsScreen> {
             Row(
               children: [
                 // Therapist Image
-                Container(
-                  width: 45,
-                  height: 45,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: const Color(0xFFEE3A8E), width: 2),
-                  ),
-                  child: const CircleAvatar(
-                    radius: 24,
-                    backgroundImage: AssetImage('assets/images/user-pfp.png'),
-                  ),
+                ProfilePicture(
+                  imagePath: 'assets/images/user-pfp.png',
+                  size: 45,
+                  borderWidth: 2,
                 ),
                 SizedBox(width: isSmallDevice ? 8 : 16),
                 // Therapist Info
@@ -365,17 +357,23 @@ class _BookedSessionsScreenState extends State<BookedSessionsScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(width: isSmallDevice ? 5 : 8),
-                          Image.asset('assets/images/icons/star.png', width: starSize, height: starSize),
-                          SizedBox(width: isSmallDevice ? 3 : 4),
-                          Text(
-                            session['rating'],
-                            style: TextStyle(
-                              fontSize: ratingFontSize,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black,
+                          // Verified checkmark
+                          if (session['isVerified'] == true) ...[
+                            SizedBox(width: isSmallDevice ? 4 : 6),
+                            Container(
+                              width: isSmallDevice ? 13 : 16,
+                              height: isSmallDevice ? 13 : 16,
+                              decoration: const BoxDecoration(
+                                color: Color(0xFF29CA25),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.check,
+                                size: isSmallDevice ? 10 : 12,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
+                          ],
                         ],
                       ),
                       const SizedBox(height: 2),

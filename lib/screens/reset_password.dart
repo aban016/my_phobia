@@ -77,7 +77,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                           child: Container(
                             margin: const EdgeInsets.all(2),
                             decoration: BoxDecoration(
-                              color: Color(0xFF090A13),
+                              color: Color(0xFF01122F),
                               borderRadius: BorderRadius.circular(50),
                             ),
                             child: TextField(
@@ -123,7 +123,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                           child: Container(
                             margin: const EdgeInsets.all(2),
                             decoration: BoxDecoration(
-                              color: Color(0xFF090A13),
+                              color: Color(0xFF01122F),
                               borderRadius: BorderRadius.circular(50),
                             ),
                             child: TextField(

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 
 class CustomBottomNav extends StatelessWidget {
@@ -41,11 +42,11 @@ class CustomBottomNav extends StatelessWidget {
       ),
       child: Row(
         children: [
-          _bottomNavItem(IconsaxPlusBold.status_up, "Progress Tracking", const Color(0xFF320F7D), 0),
+          _bottomNavItem(Iconsax.percentage_circle, "Progress", const Color(0xFF320F7D), 0),
           _bottomNavItem(IconsaxPlusBold.home, "Home", const Color(0xFF320F7D), 1),
           _bottomNavItem(
-            isTherapist ? IconsaxPlusBold.message : IconsaxPlusBold.health,
-            isTherapist ? "Communication" : "Holistic Support",
+            isTherapist ? IconsaxPlusBold.message : Iconsax.menu_1,
+            isTherapist ? "Communication" : "News",
             const Color(0xFF320F7D),
             2
           ),

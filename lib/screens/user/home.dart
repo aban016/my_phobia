@@ -3,9 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/background.dart';
 import 'package:my_phobia/screens/components/cardsrow.dart';
-import 'package:my_phobia/screens/components/daily_thought_card.dart';
-import 'package:my_phobia/screens/user/notification.dart';
-
+import 'package:my_phobia/screens/components/gradient_button.dart';
+import 'package:my_phobia/screens/user/subscription_purchase.dart';
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -40,7 +39,7 @@ class _HomeState extends State<Home> {
                       width: screenWidth,
                       height: screenHeight * 0.06,
                       margin: const EdgeInsets.only(
-                          left: 20, right: 20, top: 40, bottom: 20),
+                          left: 16, right: 16, top: 30, bottom: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -54,7 +53,7 @@ class _HomeState extends State<Home> {
                             "Hi, Tetiana!",
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 28,
+                              fontSize: 32,
                               fontWeight: FontWeight.w400,
                               decoration: TextDecoration.none,
                             ),
@@ -66,24 +65,6 @@ class _HomeState extends State<Home> {
                             child: _blurCircleIcon("assets/images/icons/bell.png"),
                           ),
                         ],
-                      ),
-                    ),
-
-                    // ✅ Daily Thought Card
-                    DailyThoughtCard(screenWidth: screenWidth),
-
-                    const SizedBox(height: 20),
-                    // ✅ Services Heading
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 20),
-                      child: const Text(
-                        "Services",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
-                          decoration: TextDecoration.none,
-                        ),
                       ),
                     ),
 
@@ -107,41 +88,60 @@ class _HomeState extends State<Home> {
                     ),
 
                     const SizedBox(height: 20),
-                    // ✅ Subscription Area
+                    // ✅ Subscription Area (with gradient border)
                     ClipRRect(
                       borderRadius: BorderRadius.circular(16),
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
                         child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 26),
-                          padding: const EdgeInsets.all(16),
+                          margin: const EdgeInsets.symmetric(horizontal: 16),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.07),
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              width: 1.5,
-                              color: Colors.pinkAccent,
+                            gradient: const LinearGradient(
+                              colors: [
+                                Color(0xFFF5A626),
+                                Color(0xFFEE3A8E),
+                                Color(0xFF8944CD),
+                                Color(0xFF5222E8),
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
                             ),
+                            borderRadius: BorderRadius.circular(16),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "Standard - Plan",
-                                style: TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: 18,
-                                  decoration: TextDecoration.none,
+                          child: Container(
+                            margin: const EdgeInsets.all(2),
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF01122F),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Monthly Plan",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    decoration: TextDecoration.none,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 12),
+                                const SizedBox(height: 12),
 
-                              // ✅ Subscription Items
-                              _subscriptionItem("Lorem Ipsum Dorsi Collab Episum lore"),
-                              _subscriptionItem("Lorem Ipsum Dorsi Collab Episum lore"),
-                              _subscriptionItem("Lorem Ipsum Dorsi Collab Episum lore"),
-                              _subscriptionItem("Lorem Ipsum Dorsi Collab Episum lore"),
-                            ],
+                                // ✅ Subscription Items
+                                _subscriptionItem("All experiences with all levels."),
+                                _subscriptionItem("Extra 05% off on virtual therapy sessions."),
+
+                                SizedBox(height: 12),
+                                GradientButton(text: "Subscribe For \$100.00", onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => SubscriptionPurchaseScreen()),
+                                  );
+                                }),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -157,7 +157,7 @@ class _HomeState extends State<Home> {
   }
 
   // 🔹 Blur Circle Icon
-  Widget _blurCircleIcon(String imagePath, {VoidCallback? onTap = null}) {
+  Widget _blurCircleIcon(String imagePath) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(50),
       child: BackdropFilter(
@@ -203,7 +203,8 @@ class _HomeState extends State<Home> {
             ),
           ],
         ),
-        const Divider(color: Colors.white24, thickness: 1),
+        const Divider(color: Colors.white, thickness: 1.5),
+        SizedBox(height: 6),
       ],
     );
   }

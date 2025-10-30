@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:my_phobia/screens/components/background.dart';
 import 'package:my_phobia/screens/components/gradient_button.dart';
 import 'package:my_phobia/screens/components/custom_popup.dart';
@@ -14,24 +15,25 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _rememberMe = false;
 
   // Dummy users array with roles
   final List<Map<String, dynamic>> dummyUsers = [
     {
-      'email': 'user@example.com',
-      'password': 'password123',
+      'email': 'user',
+      'password': '123',
       'role': 'user',
       'name': 'John Doe',
     },
     {
-      'email': 'therapist@example.com',
-      'password': 'password123',
+      'email': 'therapist',
+      'password': '123',
       'role': 'therapist',
       'name': 'Dr. Sarah Smith',
     },
     {
-      'email': 'admin@example.com',
-      'password': 'password123',
+      'email': 'admin',
+      'password': '123',
       'role': 'user',
       'name': 'Admin User',
     },
@@ -139,7 +141,7 @@ class _LoginState extends State<Login> {
                           child: Container(
                             margin: const EdgeInsets.all(2), // Gradient dikhega sirf border ki tarah
                             decoration: BoxDecoration(
-                              color: Color(0xFF090A13), // Field ka background (ya Colors.grey.withOpacity(0.1))
+                              color: Color(0xFF01122F),
                               borderRadius: BorderRadius.circular(50),
                             ),
                             child: TextField(
@@ -172,7 +174,7 @@ class _LoginState extends State<Login> {
                           child: Container(
                             margin: const EdgeInsets.all(2),
                             decoration: BoxDecoration(
-                              color: Color(0xFF090A13),
+                              color: Color(0xFF01122F),
                               borderRadius: BorderRadius.circular(50),
                             ),
                             child: TextField(
@@ -191,15 +193,65 @@ class _LoginState extends State<Login> {
 
                         const SizedBox(height: 10),
 
-                        // Forgot password
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/forgot_password');
-                            },
-                            child: const Text("Forgot Password?", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white),),
-                          ),
+                        // Remember Me and Forgot Password row
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            // Remember Me checkbox
+                            Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _rememberMe = !_rememberMe;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 15,
+                                    height: 15,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.white,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: _rememberMe ? Colors.transparent : Colors.transparent,
+                                    ),
+                                    child: _rememberMe
+                                        ? const Icon(
+                                            Icons.check,
+                                            size: 11,
+                                            color: Colors.white,
+                                          )
+                                        : null,
+                                  ),
+                                ),
+                                const SizedBox(width: 5),
+                                const Text(
+                                  "Remember Me",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            // Forgot Password
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/forgot_password');
+                              },
+                              child: const Text(
+                                "Forgot Password?",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 10),
 
@@ -292,11 +344,7 @@ class _LoginState extends State<Login> {
                                 ),
                                 child: IconButton(
                                   onPressed: () {},
-                                  icon: Image.asset(
-                                    'assets/images/icons/google.png', // path to your google logo image
-                                    width: 24,
-                                    height: 24,
-                                  ),
+                                  icon: Icon(Iconsax.google_1, size: 24, color: Color(0xFFEE3A8D),),
                                 ),
                               ),
                             ),
@@ -323,45 +371,11 @@ class _LoginState extends State<Login> {
                                 ),
                                 child: IconButton(
                                   onPressed: () {},
-                                  icon: Image.asset(
-                                    'assets/images/icons/apple.png', // path to your apple logo image
-                                    width: 24,
-                                    height: 24,
-                                  ),
+                                  icon: Icon(Iconsax.apple, size: 24, color: Color(0xFFEE3A8D),),
                                 ),
                               ),
                             ),
 
-                            // Facebook
-                            Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 8),
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    Color(0xFFF5A626),
-                                    Color(0xFFEE3A8E),
-                                    Color(0xFF8944CD),
-                                    Color(0xFF5222E8),
-                                  ],
-                                ),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Container(
-                                margin: const EdgeInsets.all(2),
-                                decoration: const BoxDecoration(
-                                  color: Color(0xFF090A13),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: IconButton(
-                                  onPressed: () {},
-                                  icon: Image.asset(
-                                    'assets/images/icons/facebook.png', // path to your facebook logo image
-                                    width: 24,
-                                    height: 24,
-                                  ),
-                                ),
-                              ),
-                            ),
                           ],
                         )
 

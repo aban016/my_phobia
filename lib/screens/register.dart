@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/background.dart';
 import 'package:my_phobia/screens/login.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class SignUp extends StatelessWidget {
   const SignUp({super.key});
@@ -188,25 +189,10 @@ class SignUp extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           _buildSocialButton(
-                            icon: Image.asset(
-                              'assets/images/icons/google.png', // path to your google logo image
-                              width: 24,
-                              height: 24,
-                            ),
+                            icon: Icon(Iconsax.google_1, size: 24, color: Color(0xFFEE3A8D),),
                           ),
                           _buildSocialButton(
-                            icon: Image.asset(
-                              'assets/images/icons/apple.png', // path to your apple logo image
-                              width: 24,
-                              height: 24,
-                            ),
-                          ),
-                          _buildSocialButton(
-                            icon: Image.asset(
-                              'assets/images/icons/facebook.png', // path to your facebook logo image
-                              width: 24,
-                              height: 24,
-                            ),
+                            icon: Icon(Iconsax.apple, size: 24, color: Color(0xFFEE3A8D),),
                           ),
                         ],
                       ),
@@ -238,13 +224,16 @@ class SignUp extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.all(2),
         decoration: BoxDecoration(
-          color: const Color(0xFF090A13),
+          color: const Color(0xFF01122F),
           borderRadius: BorderRadius.circular(50),
         ),
         child: TextField(
           obscureText: obscure,
           decoration: InputDecoration(
             hintText: hint,
+            hintStyle: TextStyle(
+              color: Colors.grey[400],
+            ),
             border: InputBorder.none,
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
