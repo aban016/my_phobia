@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:my_phobia/screens/components/custom_topbar.dart';
 import 'package:my_phobia/screens/components/gradient_button.dart';
 
@@ -74,33 +75,30 @@ class HelpFeedback extends StatelessWidget {
                     // Social Links Row
                     Row(
                       children: [
-                        _buildSocialLink(Icons.apple, () {}),
+                        _buildSocialLink(Iconsax.apple, () {}),
                     const SizedBox(width: 10),
-                        _buildSocialLink(Icons.g_mobiledata, () {}),
+                        _buildSocialLink(Iconsax.google_1, () {}),
                     const SizedBox(width: 10),
-                        _buildSocialLink(Icons.facebook, () {}),
+                        _buildSocialLink(Iconsax.facebook, () {}),
                     const SizedBox(width: 10),
-                        _buildSocialLink(Icons.camera_alt, () {}),
+                        _buildSocialLink(Iconsax.instagram, () {}),
                       ],
                     ),
                     
-                    const SizedBox(height: 60),
+                    const SizedBox(height: 40),
+
+                    GradientButton(
+                      text: "Chat With Customer Support",
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/customer_support');
+                      },
+                    ),
                   ],
                 ),
               ),
             ),
           ),
           
-          // Bottom Button
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: GradientButton(
-              text: "Chat With Customer Support",
-              onPressed: () {
-                Navigator.pushNamed(context, '/customer_support');
-              },
-            ),
-          ),
         ],
       ),
     );
@@ -110,41 +108,29 @@ class HelpFeedback extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 36,
-        height: 36,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            width: 1.5,
-            color: Colors.transparent,
+          gradient: const LinearGradient(
+            colors: [
+              Color(0xFFF5A626),
+              Color(0xFFEE3A8E),
+              Color(0xFF8944CD),
+              Color(0xFF5222E8),
+            ],
           ),
+          shape: BoxShape.circle,
         ),
         child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            gradient: const LinearGradient(
-              colors: [
-                Color(0xFFF5A626),
-                Color(0xFFEE3A8E),
-                Color(0xFF8944CD),
-                Color(0xFF5222E8),
-              ],
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-            ),
+          margin: const EdgeInsets.all(2),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.circle,
           ),
-          padding: const EdgeInsets.all(1.5),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10.5),
-            ),
-            child: Center(
-              child: Icon(
-                icon,
-                size: 16,
-                color: const Color(0xFF320F7D),
-              ),
+          child: IconButton(
+            onPressed: onTap,
+            icon: Icon(
+              icon,
+              size: 24,
+              color: const Color(0xFFEE3A8D),
             ),
           ),
         ),

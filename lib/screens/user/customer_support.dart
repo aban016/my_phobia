@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:my_phobia/screens/components/custom_topbar.dart';
 
 class CustomerSupport extends StatefulWidget {
@@ -155,7 +156,7 @@ class _CustomerSupportState extends State<CustomerSupport> {
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
-                    Icons.send,
+                    Iconsax.send_2,
                     color: Colors.white,
                     size: 20,
                   ),

@@ -219,60 +219,51 @@ class _ChangePasswordState extends State<ChangePassword> {
           children: [
             Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                border: Border.all(
-                  width: 1.5,
-                  color: Colors.transparent,
+                borderRadius: BorderRadius.circular(30),
+                gradient: const LinearGradient(
+                  colors: [
+                    Color(0xFFF5A626),
+                    Color(0xFFEE3A8E),
+                    Color(0xFF8944CD),
+                    Color(0xFF5222E8),
+                  ],
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
                 ),
               ),
+              padding: const EdgeInsets.all(1.5),
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0xFFF5A626),
-                      Color(0xFFEE3A8E),
-                      Color(0xFF8944CD),
-                      Color(0xFF5222E8),
-                    ],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                  ),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(28.5),
                 ),
-                padding: const EdgeInsets.all(1.5),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(23.5),
+                child: TextField(
+                  controller: controller,
+                  obscureText: !isVisible,
+                  onChanged: onChanged,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
                   ),
-                  child: TextField(
-                    controller: controller,
-                    obscureText: !isVisible,
-                    onChanged: onChanged,
-                    style: const TextStyle(
-                      color: Colors.black,
+                  decoration: InputDecoration(
+                    hintText: _getHintText(label),
+                    hintStyle: TextStyle(
+                      color: Colors.grey[400],
                       fontSize: 16,
                     ),
-                    decoration: InputDecoration(
-                      hintText: _getHintText(label),
-                      hintStyle: TextStyle(
-                        color: Colors.grey[400],
-                        fontSize: 16,
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 16,
+                    ),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        isVisible ? Icons.visibility : Icons.visibility_off,
+                        color: Colors.grey[600],
                       ),
-                      border: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 16,
-                      ),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          isVisible ? Icons.visibility : Icons.visibility_off,
-                          color: Colors.grey[600],
-                        ),
-                        onPressed: onToggleVisibility,
-                      ),
+                      onPressed: onToggleVisibility,
                     ),
                   ),
                 ),
@@ -291,7 +282,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 child: Text(
                   label,
                   style: const TextStyle(
-                    color: Color(0xFF320F7D),
+                    color: Color(0xFFD63D9D),
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                   ),

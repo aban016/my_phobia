@@ -48,7 +48,7 @@ class TherapistDetails extends StatelessWidget {
           ),
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.only(left: 26, right: 26, bottom: 20),
+              padding: const EdgeInsets.only(left: 26, right: 26, bottom: 20, top: 15),
               physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [

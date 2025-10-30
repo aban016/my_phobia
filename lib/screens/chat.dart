@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:my_phobia/screens/components/custom_topbar.dart';
+import 'package:my_phobia/screens/components/profile_picture.dart';
 
 class Chat extends StatefulWidget {
   final String contactName;
@@ -169,7 +171,7 @@ class _ChatState extends State<Chat> {
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
-                    Icons.send,
+                    Iconsax.send_2,
                     color: Colors.white,
                     size: 20,
                   ),
@@ -187,20 +189,10 @@ class _ChatState extends State<Chat> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Profile Picture
-        Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: const Color(0xFFEE3A8E),
-              width: 2,
-            ),
-          ),
-          child: CircleAvatar(
-            radius: 18,
-            backgroundImage: AssetImage(widget.contactImage),
-          ),
+        ProfilePicture(
+          imagePath: widget.contactImage,
+          size: 40,
+          borderWidth: 2,
         ),
         
         const SizedBox(width: 10),
@@ -264,20 +256,10 @@ class _ChatState extends State<Chat> {
         const SizedBox(width: 10),
         
         // Profile Picture
-        Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: const Color(0xFFEE3A8E),
-              width: 2,
-            ),
-          ),
-          child: CircleAvatar(
-            radius: 18,
-            backgroundImage: AssetImage(widget.contactImage),
-          ),
+        ProfilePicture(
+          imagePath: widget.contactImage,
+          size: 40,
+          borderWidth: 2,
         ),
       ],
     );

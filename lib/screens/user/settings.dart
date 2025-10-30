@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:my_phobia/screens/components/custom_topbar.dart';
 
 class Settings extends StatefulWidget {
@@ -47,8 +48,8 @@ class _SettingsState extends State<Settings> {
                   
                   // Settings items
                   _buildSettingsItem(
-                    icon: Icons.notifications_outlined,
-                    title: "Notifications Management",
+                    icon: Iconsax.notification_bing,
+                    title: "Notifications",
                     isToggle: true,
                     toggleValue: notificationsEnabled,
                     onToggle: (value) {
@@ -61,21 +62,7 @@ class _SettingsState extends State<Settings> {
                   const SizedBox(height: 15),
                   
                   _buildSettingsItem(
-                    icon: Icons.volume_up_outlined,
-                    title: "Sounds",
-                    isToggle: true,
-                    toggleValue: soundsEnabled,
-                    onToggle: (value) {
-                      setState(() {
-                        soundsEnabled = value;
-                      });
-                    },
-                  ),
-                  
-                  const SizedBox(height: 15),
-                  
-                  _buildSettingsItem(
-                    icon: Icons.credit_card_outlined,
+                    icon: Iconsax.lock_1,
                     title: "Change Password",
                     isToggle: false,
                     onTap: () {
@@ -86,7 +73,18 @@ class _SettingsState extends State<Settings> {
                   const SizedBox(height: 15),
                   
                   _buildSettingsItem(
-                    icon: Icons.description_outlined,
+                    icon: Iconsax.user_edit_copy,
+                    title: "Edit Profile",
+                    isToggle: false,
+                    onTap: () {
+                      Navigator.pushNamed(context, '/edit_profile');
+                    },
+                  ),
+                  
+                  const SizedBox(height: 15),
+                  
+                  _buildSettingsItem(
+                    icon: Iconsax.note_21,
                     title: "Terms Of Services",
                     isToggle: false,
                     onTap: () {
@@ -97,7 +95,7 @@ class _SettingsState extends State<Settings> {
                   const SizedBox(height: 15),
                   
                   _buildSettingsItem(
-                    icon: Icons.description_outlined,
+                    icon: Iconsax.note_21,
                     title: "Privacy Policy",
                     isToggle: false,
                     onTap: () {
@@ -108,7 +106,7 @@ class _SettingsState extends State<Settings> {
                   const SizedBox(height: 15),
                   
                   _buildSettingsItem(
-                    icon: Icons.description_outlined,
+                    icon: Iconsax.note_21,
                     title: "About Us",
                     isToggle: false,
                     onTap: () {
@@ -132,24 +130,28 @@ class _SettingsState extends State<Settings> {
     Function(bool)? onToggle,
     VoidCallback? onTap,
   }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade300, width: 1),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onTap,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
+          gradient: const LinearGradient(
+            colors: [
+              Color(0xFFF5A626),
+              Color(0xFFEE3A8E),
+              Color(0xFF8944CD),
+              Color(0xFF5222E8),
+            ],
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+          ),
+        ),
+        padding: const EdgeInsets.all(1.5),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(11),
+          ),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
@@ -158,7 +160,7 @@ class _SettingsState extends State<Settings> {
                 Icon(
                   icon,
                   color: const Color(0xFFEE3A8D), 
-                  size: 37,
+                  size: 24,
                 ),
                 
                 const SizedBox(width: 16),
@@ -167,8 +169,8 @@ class _SettingsState extends State<Settings> {
                 Expanded(
                   child: Text(
                     title,
-                    style: TextStyle(
-                      color: Colors.grey[800],
+                    style: const TextStyle(
+                      color: Colors.black87,
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                     ),

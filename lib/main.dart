@@ -10,6 +10,7 @@ import 'package:my_phobia/screens/user/terms.dart';
 import 'package:my_phobia/screens/user/policy.dart';
 import 'package:my_phobia/screens/user/about.dart';
 import 'package:my_phobia/screens/user/change_password.dart';
+import 'package:my_phobia/screens/user/edit_profile.dart';
 import 'package:my_phobia/screens/user/help_feedback.dart';
 import 'package:my_phobia/screens/inbox.dart';
 import 'package:my_phobia/screens/chat.dart';
@@ -69,6 +70,7 @@ class MyApp extends StatelessWidget {
         '/policy': (context) => const PrivacyPolicy(),
         '/about': (context) => const AboutUs(),
         '/change_password': (context) => const ChangePassword(),
+        '/edit_profile': (context) => const EditProfile(),
         '/help_feedback': (context) => const HelpFeedback(),
         '/inbox': (context) => const Inbox(),
         '/chat': (context) => const Chat(),

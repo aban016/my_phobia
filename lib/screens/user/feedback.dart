@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/components/custom_topbar.dart';
 import 'package:my_phobia/screens/components/custom_popup.dart';
-import 'package:file_picker/file_picker.dart';
-import 'dart:io';
 
 class FeedbackScreen extends StatefulWidget {
   const FeedbackScreen({super.key});
@@ -12,18 +10,7 @@ class FeedbackScreen extends StatefulWidget {
 }
 
 class _FeedbackScreenState extends State<FeedbackScreen> {
-  File? _selectedImage;
-
-  Future<void> _pickImage() async {
-    FilePickerResult? result = await FilePicker.platform
-        .pickFiles(type: FileType.image, allowMultiple: false);
-
-    if (result != null && result.files.single.path != null) {
-      setState(() {
-        _selectedImage = File(result.files.single.path!);
-      });
-    }
-  }
+  int selectedStar = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -50,35 +37,23 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50),
             child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    "assets/images/icons/feedback_star.png",
-                    width: 37,
-                    height: 37,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: List.generate(5, (index) {
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedStar = index + 1;
+                    });
+                  },
+                  child: Icon(
+                    (index + 1) <= selectedStar ? Icons.star : Icons.star_border,
+                    size: 40,
+                    color: (index + 1) <= selectedStar ? Color(0xFFFF9E00) : Colors.grey[300],
                   ),
-                  Image.asset(
-                    "assets/images/icons/feedback_star.png",
-                    width: 37,
-                    height: 37,
-                  ),
-                  Image.asset(
-                    "assets/images/icons/feedback_star.png",
-                    width: 37,
-                    height: 37,
-                  ),
-                  Image.asset(
-                    "assets/images/icons/feedback_star.png",
-                    width: 37,
-                    height: 37,
-                  ),
-                  Image.asset(
-                    "assets/images/icons/feedback_star.png",
-                    width: 37,
-                    height: 37,
-                  ),
-                ]),
+                );
+              }),
+            ),
           ),
           SizedBox(height: 35),
           // Review
@@ -164,56 +139,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
               ],
             ),
           ),
-          SizedBox(height: 18),
-
-          // New file upload area with selectable image and dotted + gradient border
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 26),
-            child: GestureDetector(
-              onTap: _pickImage,
-              child: CustomDottedGradientBorder(
-                borderRadius: BorderRadius.circular(16),
-                gradient: const LinearGradient(colors: [
-                  Color(0xFFF5A626),
-                  Color(0xFFEE3A8E),
-                  Color(0xFF8944CD),
-                  Color(0xFF5222E8),
-                ]),
-                strokeWidth: 2.2,
-                dashWidth: 10,
-                dashSpace: 6,
-                child: Container(
-                  height: 100,
-                  width: double.infinity,
-                  alignment: Alignment.center,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
-                  child: _selectedImage == null
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset("assets/images/icons/upload.png", width: 24, height: 24),
-                            SizedBox(height: 7),
-                            Text(
-                              "Upload Media",
-                              style: TextStyle(
-                                  color: Color(0xFF320F7D),
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14),
-                            ),
-                          ],
-                        )
-                      : ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.file(_selectedImage!,
-                              width: 70, height: 70, fit: BoxFit.cover),
-                        ),
-                ),
-              ),
-            ),
-          ),
-
-          SizedBox(height: 18),
+          
+          const SizedBox(height: 35),
 
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 26),
@@ -272,99 +199,4 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
       ),
     );
   }
-}
-
-/// Widget for Dotted Gradient Border
-class CustomDottedGradientBorder extends StatelessWidget {
-  final Widget child;
-  final BorderRadius borderRadius;
-  final Gradient gradient;
-  final double strokeWidth;
-  final double dashWidth;
-  final double dashSpace;
-
-  const CustomDottedGradientBorder({
-    required this.child,
-    required this.borderRadius,
-    required this.gradient,
-    this.strokeWidth = 2,
-    this.dashWidth = 8,
-    this.dashSpace = 4,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: _DottedGradientBorderPainter(
-        borderRadius: borderRadius,
-        gradient: gradient,
-        strokeWidth: strokeWidth,
-        dashWidth: dashWidth,
-        dashSpace: dashSpace,
-      ),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: borderRadius,
-        ),
-        child: child,
-      ),
-    );
-  }
-}
-
-class _DottedGradientBorderPainter extends CustomPainter {
-  final BorderRadius borderRadius;
-  final Gradient gradient;
-  final double strokeWidth;
-  final double dashWidth;
-  final double dashSpace;
-
-  _DottedGradientBorderPainter({
-    required this.borderRadius,
-    required this.gradient,
-    required this.strokeWidth,
-    required this.dashWidth,
-    required this.dashSpace,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final rect = Offset.zero & size;
-    final borderRad = borderRadius.topLeft.x; 
-    final rrect = RRect.fromRectAndRadius(
-      rect,
-      Radius.circular(borderRad),
-    );
-
-    final Paint paint = Paint()
-      ..shader = gradient.createShader(rect)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = strokeWidth;
-
-    // Path around rounded rectangle
-    final Path borderPath = Path()..addRRect(rrect);
-
-    final pathMetricIterator = borderPath.computeMetrics().iterator;
-    while (pathMetricIterator.moveNext()) {
-      final metric = pathMetricIterator.current;
-      double distance = 0.0;
-      while (distance < metric.length) {
-        final double len = (distance + dashWidth) < metric.length
-            ? dashWidth
-            : metric.length - distance;
-        final Path segment = metric.extractPath(distance, distance + len);
-        canvas.drawPath(segment, paint);
-        distance += dashWidth + dashSpace;
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(_DottedGradientBorderPainter oldDelegate) =>
-      oldDelegate.borderRadius != borderRadius ||
-      oldDelegate.gradient != gradient ||
-      oldDelegate.strokeWidth != strokeWidth ||
-      oldDelegate.dashWidth != dashWidth ||
-      oldDelegate.dashSpace != dashSpace;
 }

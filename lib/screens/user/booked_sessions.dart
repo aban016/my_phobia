@@ -283,8 +283,6 @@ class _BookedSessionsScreenState extends State<BookedSessionsScreen> {
 
   // 🔹 Individual Session List Item
   Widget _buildSessionCard(Map<String, dynamic> session, BuildContext context) {
-    final bool isPast = session['category'] == 'past';
-
     // Responsive font/icon sizes
     final double screenWidth = MediaQuery.of(context).size.width;
     final bool isSmallDevice = screenWidth < 350;
@@ -387,6 +385,28 @@ class _BookedSessionsScreenState extends State<BookedSessionsScreen> {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
+                      const SizedBox(height: 4),
+                      if(session['category'] == 'past') ...[
+                        GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const FeedbackScreen(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          "Provide Ratings",
+                          style: TextStyle(
+                            color: Color(0xFFEE3A8D),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                      ],
                     ],
                   ),
                 ),
@@ -454,32 +474,6 @@ class _BookedSessionsScreenState extends State<BookedSessionsScreen> {
                 ),
               ],
             ),
-            if (isPast) ...[
-              const SizedBox(height: 6),
-              GestureDetector(
-                onTap: () {
-                  // This is okay to follow usual, because it's not the overall list card
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const FeedbackScreen(),
-                    ),
-                  );
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 0),
-                  child: Text(
-                    "Provide Ratings",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                ),
-              ),
-            ]
           ],
         ),
       ),
