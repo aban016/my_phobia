@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:my_phobia/screens/user/bottom_nav_wrapper.dart';
 import 'package:my_phobia/screens/user/booking_details.dart';
 import 'package:my_phobia/screens/user/payment_methods.dart';
@@ -45,9 +46,33 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Set status bar to light (white icons) for all screens
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light, // iOS
+        statusBarBrightness: Brightness.dark, // Android
+        systemNavigationBarColor: Colors.black,
+        systemNavigationBarIconBrightness: Brightness.light,
+      ),
+    );
+
     return MaterialApp(
       title: 'My Phobia',
       debugShowCheckedModeBanner: false,
+      builder: (context, child) {
+        // Ensure status bar is light for all screens
+        SystemChrome.setSystemUIOverlayStyle(
+          const SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            statusBarIconBrightness: Brightness.light, // iOS
+            statusBarBrightness: Brightness.dark, // Android
+            systemNavigationBarColor: Colors.black,
+            systemNavigationBarIconBrightness: Brightness.light,
+          ),
+        );
+        return child!;
+      },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
         fontFamily: 'Urbanist',
