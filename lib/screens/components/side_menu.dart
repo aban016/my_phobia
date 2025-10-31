@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_phobia/screens/login.dart';
 import 'package:my_phobia/screens/user/settings.dart';
 import 'package:my_phobia/screens/components/custom_popup.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SideMenu extends StatelessWidget {
   final bool isTherapist;
@@ -263,13 +264,21 @@ class SideMenu extends StatelessWidget {
   }
 
   // Show logout confirmation popup
-  void _showLogoutConfirmation(BuildContext context) {
+  void _showLogoutConfirmation(BuildContext context) async {
     PopupHelper.showConfirmation(
       context: context,
       title: "Logout",
       message: "Are you sure you want to logout?",
       confirmText: "Yes, Logout",
-      onConfirm: () {
+      onConfirm: () async {
+        // Clear session data
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.remove('is_logged_in');
+        await prefs.remove('logged_in_email');
+        await prefs.remove('logged_in_role');
+        await prefs.remove('logged_in_name');
+        await prefs.remove('session_expiry');
+        
         // Close the sidebar first
         Navigator.pop(context);
         // Navigate to login screen

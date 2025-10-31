@@ -135,16 +135,60 @@ class AppInitializer extends StatefulWidget {
 class _AppInitializerState extends State<AppInitializer> {
   bool _isLoading = true;
   bool _showOnboarding = false;
+  bool _isLoggedIn = false;
+  String? _userRole;
 
   @override
   void initState() {
     super.initState();
-    _checkOnboardingStatus();
+    _initializeApp();
   }
 
-  Future<void> _checkOnboardingStatus() async {
+  Future<void> _initializeApp() async {
     final prefs = await SharedPreferences.getInstance();
+    
+    // Check onboarding status
     final onboardingCompleted = prefs.getBool('onboarding_completed') ?? false;
+    
+    // Check login session
+    final isLoggedIn = prefs.getBool('is_logged_in') ?? false;
+    
+    if (isLoggedIn) {
+      // Check if session is still valid (24 hours)
+      final expiryString = prefs.getString('session_expiry');
+      if (expiryString != null) {
+        try {
+          final expiryTime = DateTime.parse(expiryString);
+          final now = DateTime.now();
+          
+          if (now.isBefore(expiryTime)) {
+            // Session is still valid
+            final role = prefs.getString('logged_in_role');
+            setState(() {
+              _isLoggedIn = true;
+              _userRole = role;
+              _showOnboarding = !onboardingCompleted;
+              _isLoading = false;
+            });
+            return;
+          } else {
+            // Session expired, clear it
+            await prefs.remove('is_logged_in');
+            await prefs.remove('logged_in_email');
+            await prefs.remove('logged_in_role');
+            await prefs.remove('logged_in_name');
+            await prefs.remove('session_expiry');
+          }
+        } catch (e) {
+          // Invalid expiry time, clear session
+          await prefs.remove('is_logged_in');
+          await prefs.remove('logged_in_email');
+          await prefs.remove('logged_in_role');
+          await prefs.remove('logged_in_name');
+          await prefs.remove('session_expiry');
+        }
+      }
+    }
     
     setState(() {
       _showOnboarding = !onboardingCompleted;
@@ -158,10 +202,28 @@ class _AppInitializerState extends State<AppInitializer> {
       return const Splash();
     }
     
+    // If logged in, redirect to appropriate home screen
+    if (_isLoggedIn) {
+      // Use Future.microtask to ensure context is available after build
+      Future.microtask(() {
+        if (_userRole == 'therapist') {
+          Navigator.of(context).pushReplacementNamed('/therapist_home');
+        } else {
+          Navigator.of(context).pushReplacementNamed('/home');
+        }
+      });
+      // Show splash while navigating
+      return const Splash();
+    }
+    
     if (_showOnboarding) {
       return const OnboardingScreen();
     }
     
+    // If not logged in, show login screen after splash
+    Future.microtask(() {
+      Navigator.of(context).pushReplacementNamed('/login');
+    });
     return const Splash();
   }
 }

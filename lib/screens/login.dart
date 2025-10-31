@@ -4,6 +4,7 @@ import 'package:my_phobia/screens/components/background.dart';
 import 'package:my_phobia/screens/components/gradient_button.dart';
 import 'package:my_phobia/screens/components/custom_popup.dart';
 import 'package:my_phobia/screens/register.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -39,7 +40,7 @@ class _LoginState extends State<Login> {
     },
   ];
 
-  void _handleLogin() {
+  Future<void> _handleLogin() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
 
@@ -61,6 +62,17 @@ class _LoginState extends State<Login> {
     );
 
     if (user.isNotEmpty) {
+      // Save session data with 24-hour expiry
+      final prefs = await SharedPreferences.getInstance();
+      final now = DateTime.now();
+      final expiryTime = now.add(const Duration(hours: 24));
+      
+      await prefs.setString('logged_in_email', email);
+      await prefs.setString('logged_in_role', user['role']);
+      await prefs.setString('logged_in_name', user['name']);
+      await prefs.setString('session_expiry', expiryTime.toIso8601String());
+      await prefs.setBool('is_logged_in', true);
+
       // Navigate based on user role
       if (user['role'] == 'therapist') {
         Navigator.pushReplacementNamed(context, '/therapist_home');
