@@ -48,7 +48,7 @@ class VirtualTherapyScreen extends StatelessWidget {
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   double screenWidth = constraints.maxWidth;
-                  double aspectRatio = screenWidth < 340 ? 0.56 : 0.77;
+                  double aspectRatio = screenWidth < 340 ? 0.77 : 0.79;
 
                   return GridView.builder(
                     physics: const NeverScrollableScrollPhysics(),

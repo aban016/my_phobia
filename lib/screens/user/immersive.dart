@@ -15,32 +15,32 @@ class Immersive extends StatelessWidget {
       {
         "title": "Experience 01",
         "subtitle": "Crowded Streets",
-        "image": "https://images.unsplash.com/photo-1698132979679-f188396e56a1?auto=format&fit=crop&w=800&q=80",
+        "image": "assets/images/experiances/crowdedstreet.png",
       },
       {
         "title": "Experience 02",
         "subtitle": "Social Gatherings",
-        "image": "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80",
+        "image": "assets/images/experiances/socialgatherings.png",
       },
       {
         "title": "Experience 03",
         "subtitle": "Bridges",
-        "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+        "image": "assets/images/experiances/bridges.png",
       },
       {
         "title": "Experience 04",
         "subtitle": "Heights",
-        "image": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80",
+        "image": "assets/images/experiances/heights.png",
       },
       {
         "title": "Experience 05",
         "subtitle": "Funerals",
-        "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+        "image": "assets/images/experiances/funerals.png",
       },
       {
         "title": "Experience 06",
         "subtitle": "On Dates",
-        "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80",
+        "image": "assets/images/experiances/dates.png",
       },
     ];
 
@@ -179,7 +179,7 @@ class Immersive extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Image.network(image, fit: BoxFit.cover),
+          Image.asset(image, fit: BoxFit.cover),
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
